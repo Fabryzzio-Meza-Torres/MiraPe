@@ -1,4 +1,4 @@
-# Proyecto: Sistema de Detección de Ropa y Red Social de Outfits
+# Proyecto: Sistema de Detección de Ropa y Armario Virtual
 
 Este proyecto es una aplicación web desarrollada en Flask que simula un **espejo inteligente** con reconocimiento de prendas y colores mediante visión por computadora. Además, permite a los usuarios construir un **armario virtual** y una **red social de outfits**, donde pueden compartir looks, ver publicaciones, y matchear con otras personas en base al estilo y color de ropa que usan.
 
