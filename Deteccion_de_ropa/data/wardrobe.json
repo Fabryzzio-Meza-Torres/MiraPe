@@ -312,5 +312,170 @@
     "color_name": "Rosa",
     "img_path": "upload_images/1752956875_shirt, blouse_9.jpg",
     "score": 0.584182858467102
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      55,
+      91,
+      128
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752957103_top, t-shirt, sweatshirt_0.jpg",
+    "score": 0.7576492428779602
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      149,
+      164,
+      187
+    ],
+    "color_name": "Azul verdoso",
+    "img_path": "upload_images/1752957125_tie_2.jpg",
+    "score": 0.5479159355163574
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      46,
+      52,
+      65
+    ],
+    "color_name": "Negro",
+    "img_path": "upload_images/1752957125_tie_3.jpg",
+    "score": 0.6307092905044556
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      68,
+      75,
+      92
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752957125_jacket_5.jpg",
+    "score": 0.9447677731513977
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      107,
+      103,
+      106
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752957203_hood_0.jpg",
+    "score": 0.6183591485023499
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      104,
+      99,
+      104
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752957203_hood_1.jpg",
+    "score": 0.6666020750999451
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      100,
+      98,
+      104
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752957203_jacket_3.jpg",
+    "score": 0.8352961540222168
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      120,
+      119,
+      120
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752957203_hood_7.jpg",
+    "score": 0.7371984720230103
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      67,
+      59,
+      55
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752958769_glasses_6.jpg",
+    "score": 0.9026608467102051
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      212,
+      175,
+      137
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752958769_jacket_7.jpg",
+    "score": 0.6004485487937927
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      70,
+      61,
+      56
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752958769_glasses_8.jpg",
+    "score": 0.6409372687339783
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      209,
+      170,
+      132
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752958769_shirt, blouse_9.jpg",
+    "score": 0.584182858467102
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      55,
+      91,
+      128
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752958900_top, t-shirt, sweatshirt_0.jpg",
+    "score": 0.7576492428779602
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      120,
+      117,
+      118
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752958915_hood_6.jpg",
+    "score": 0.6388397216796875
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      87,
+      87,
+      87
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752958915_jacket_8.jpg",
+    "score": 0.8117253184318542
   }
 ]

@@ -52,9 +52,6 @@ def is_filtered_item(item_type):
 
 
 def rgb_to_color_name(rgb):
-    """
-    Convierte valores RGB a nombres de colores descriptivos en español
-    """
     r, g, b = rgb
 
     # Calcular brillo y saturación
@@ -79,11 +76,13 @@ def rgb_to_color_name(rgb):
     if r > g and r > b:  # Rojizo
         if r > 200 and g < 100 and b < 100:
             return "Rojo"
-        elif r > 150 and g > 100:
+        elif r > 160 and g > 120:
             if b < 100:
                 return "Naranja"
-            else:
+            elif b > 130:  # Rosa más saturado
                 return "Rosa"
+            else:
+                return "Salmón"
         elif r > 100 and g > 80 and b < 80:
             return "Marrón"
         else:
@@ -100,6 +99,8 @@ def rgb_to_color_name(rgb):
     elif b > r and b > g:  # Azulado
         if b > 200 and r < 100 and g < 100:
             return "Azul"
+        elif b > 150 and g > 120 and r < 120:
+            return "Celeste"
         elif g > 100:
             return "Azul verdoso"
         elif r > 100:
@@ -110,10 +111,14 @@ def rgb_to_color_name(rgb):
     # Combinaciones especiales
     elif r > 150 and g > 150 and b < 100:  # Amarillo
         return "Amarillo"
-    elif r > 100 and g < 100 and b > 100:  # Morado
+    elif r > 120 and g < 100 and b > 120:  # Morado
         return "Morado"
-    elif r > 150 and g > 100 and b > 150:  # Rosa/magenta
+    elif r > 170 and g > 120 and b > 170:  # Rosa/magenta (más saturado)
         return "Rosa"
+    elif r < 150 and g > 180 and b > 200:  # Celeste claro
+        return "Celeste"
+    elif r > 150 and g > 200 and b > 220:  # Azul muy claro/celeste
+        return "Celeste claro"
 
     # Por defecto, usar el canal dominante
     if max(rgb) == r:
@@ -125,9 +130,6 @@ def rgb_to_color_name(rgb):
 
 
 def enhance_color_by_garment_type(color_rgb, item_type):
-    """
-    Ajusta el color extraído basado en el tipo de prenda para mayor precisión
-    """
     try:
         # Convertir RGB a HSV para manipular mejor el color
         rgb_normalized = np.array(color_rgb) / 255.0
