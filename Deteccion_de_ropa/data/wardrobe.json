@@ -1,0 +1,316 @@
+[
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      89,
+      87,
+      98
+    ],
+    "img_path": "upload_images/1752954730_glasses_0.jpg",
+    "score": 0.7430112361907959
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      117,
+      117,
+      123
+    ],
+    "img_path": "upload_images/1752955629_hood_7.jpg",
+    "score": 0.5329494476318359
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      98,
+      97,
+      97
+    ],
+    "img_path": "upload_images/1752955629_jacket_8.jpg",
+    "score": 0.8040232062339783
+  },
+  {
+    "tipo": "collar",
+    "color_rgb": [
+      219,
+      214,
+      216
+    ],
+    "img_path": "upload_images/1752955728_collar_1.jpg",
+    "score": 0.687505304813385
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      174,
+      153,
+      139
+    ],
+    "img_path": "upload_images/1752955728_tie_2.jpg",
+    "score": 0.5479159355163574
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      56,
+      44,
+      38
+    ],
+    "img_path": "upload_images/1752955728_tie_3.jpg",
+    "score": 0.6307092905044556
+  },
+  {
+    "tipo": "collar",
+    "color_rgb": [
+      218,
+      213,
+      216
+    ],
+    "img_path": "upload_images/1752955728_collar_4.jpg",
+    "score": 0.536892831325531
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      80,
+      67,
+      61
+    ],
+    "img_path": "upload_images/1752955728_jacket_5.jpg",
+    "score": 0.9447677731513977
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      49,
+      49,
+      49
+    ],
+    "img_path": "upload_images/1752956007_jacket_4.jpg",
+    "score": 0.6069092154502869
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      84,
+      86,
+      88
+    ],
+    "img_path": "upload_images/1752956007_hood_7.jpg",
+    "score": 0.5040134191513062
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      173,
+      152,
+      138
+    ],
+    "img_path": "upload_images/1752956034_tie_2.jpg",
+    "score": 0.5479159355163574
+  },
+  {
+    "tipo": "tie",
+    "color_rgb": [
+      56,
+      44,
+      38
+    ],
+    "img_path": "upload_images/1752956034_tie_3.jpg",
+    "score": 0.6307092905044556
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      80,
+      67,
+      61
+    ],
+    "img_path": "upload_images/1752956034_jacket_5.jpg",
+    "score": 0.9447677731513977
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      115,
+      83,
+      55
+    ],
+    "img_path": "upload_images/1752956060_top, t-shirt, sweatshirt_0.jpg",
+    "score": 0.7576492428779602
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      123,
+      118,
+      119
+    ],
+    "img_path": "upload_images/1752956199_hood_4.jpg",
+    "score": 0.7313678860664368
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      89,
+      88,
+      90
+    ],
+    "img_path": "upload_images/1752956199_jacket_5.jpg",
+    "score": 0.8591772317886353
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      55,
+      91,
+      128
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752956496_top, t-shirt, sweatshirt_0.jpg",
+    "score": 0.7576492428779602
+  },
+  {
+    "tipo": "bag, wallet",
+    "color_rgb": [
+      70,
+      63,
+      53
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956751_bag, wallet_4.jpg",
+    "score": 0.6037856936454773
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      67,
+      59,
+      55
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956751_glasses_6.jpg",
+    "score": 0.9026608467102051
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      212,
+      175,
+      137
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956751_jacket_7.jpg",
+    "score": 0.6004485487937927
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      70,
+      61,
+      56
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956751_glasses_8.jpg",
+    "score": 0.6409372687339783
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      209,
+      170,
+      132
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956751_shirt, blouse_9.jpg",
+    "score": 0.584182858467102
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      67,
+      59,
+      55
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956832_glasses_6.jpg",
+    "score": 0.9026608467102051
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      212,
+      175,
+      137
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956832_jacket_7.jpg",
+    "score": 0.6004485487937927
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      70,
+      61,
+      56
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956832_glasses_8.jpg",
+    "score": 0.6409372687339783
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      209,
+      170,
+      132
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956832_shirt, blouse_9.jpg",
+    "score": 0.584182858467102
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      67,
+      59,
+      55
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956875_glasses_6.jpg",
+    "score": 0.9026608467102051
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      212,
+      175,
+      137
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956875_jacket_7.jpg",
+    "score": 0.6004485487937927
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      70,
+      61,
+      56
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752956875_glasses_8.jpg",
+    "score": 0.6409372687339783
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      209,
+      170,
+      132
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752956875_shirt, blouse_9.jpg",
+    "score": 0.584182858467102
+  }
+]
