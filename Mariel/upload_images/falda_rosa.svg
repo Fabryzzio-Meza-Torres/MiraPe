@@ -1,0 +1,14 @@
+<svg width="160" height="120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="skirtGrad" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" style="stop-color:#FFB6C1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF69B4;stop-opacity:1" />
+    </radialGradient>
+    <pattern id="dots" patternUnits="userSpaceOnUse" width="15" height="15">
+      <circle cx="7.5" cy="7.5" r="2" fill="#FF1493" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <path d="M40 20 L120 20 L140 110 L20 110 Z" fill="url(#skirtGrad)" stroke="#FF1493" stroke-width="2"/>
+  <path d="M40 20 L120 20 L140 110 L20 110 Z" fill="url(#dots)"/>
+  <path d="M50 20 L50 15 L110 15 L110 20" fill="url(#skirtGrad)" stroke="#FF1493" stroke-width="1"/>
+</svg>

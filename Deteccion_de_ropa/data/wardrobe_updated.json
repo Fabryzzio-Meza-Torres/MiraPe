@@ -1,0 +1,101 @@
+[
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      235,
+      43,
+      47
+    ],
+    "color_name": "Rojo",
+    "img_path": "upload_images/1752961394_top, t-shirt, sweatshirt_4.jpg",
+    "score": 0.9657996296882629
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      29,
+      43,
+      64
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752961408_shirt, blouse_6.jpg",
+    "score": 0.725349485874176
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      214,
+      215,
+      224
+    ],
+    "color_name": "Gris claro",
+    "img_path": "upload_images/1752961552_dress_1.jpg",
+    "score": 0.9963297247886658
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      57,
+      98,
+      68
+    ],
+    "color_name": "Verde",
+    "img_path": "upload_images/1752961899_dress_3.jpg",
+    "score": 0.9907758831977844
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      237,
+      185,
+      127
+    ],
+    "color_name": "Salmón",
+    "img_path": "upload_images/1752961935_top, t-shirt, sweatshirt_3.jpg",
+    "score": 0.7068048715591431
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      223,
+      221,
+      221
+    ],
+    "color_name": "Blanco",
+    "img_path": "upload_images/1752961954_top, t-shirt, sweatshirt_1.jpg",
+    "score": 0.9266374707221985
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      180,
+      176,
+      175
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961954_pants_10.jpg",
+    "score": 0.9783753752708435
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Verde oliva",
+    "img_path": "upload_images/1752963403_jacket_6.jpg",
+    "score": 0.7132979035377502
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      39,
+      91,
+      47
+    ],
+    "color_name": "Verde oscuro",
+    "img_path": "upload_images/1752963483_dress_3.jpg",
+    "score": 0.9907758831977844
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Camiseta Azul",
+    "category": "camisetas",
+    "image": "camiseta_azul.svg",
+    "color": "azul",
+    "colores": ["#4a90e2", "#2c5aa0", "#1e3d6f"]
+  },
+  {
+    "id": 2,
+    "name": "Pantalón Negro",
+    "category": "pantalones",
+    "image": "pantalon_negro.svg",
+    "color": "negro",
+    "colores": ["#2c2c2c", "#1a1a1a", "#666666"]
+  },
+  {
+    "id": 3,
+    "name": "Vestido Rojo",
+    "category": "vestidos",
+    "image": "vestido_rojo.svg",
+    "color": "rojo",
+    "colores": ["#ff6b6b", "#cc0000", "#990000"]
+  },
+  {
+    "id": 4,
+    "name": "Chaqueta Verde",
+    "category": "chaquetas",
+    "image": "chaqueta_verde.svg",
+    "color": "verde",
+    "colores": ["#4CAF50", "#2E7D32", "#1B5E20"]
+  },
+  {
+    "id": 5,
+    "name": "Falda Rosa",
+    "category": "faldas",
+    "image": "falda_rosa.svg",
+    "color": "rosa",
+    "colores": ["#FFB6C1", "#FF69B4", "#FF1493"]
+  }
+]

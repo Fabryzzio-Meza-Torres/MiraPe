@@ -1,0 +1,200 @@
+[
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961394_images.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "shirt",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961394_top, t-shirt, sweatshirt_4.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961408_images_1.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "shirt",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961408_shirt, blouse_6.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961522_images_2.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961552_dress_1.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961552_images_2.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961899_81d2f6e709b55cd5c16297cacb1e362f.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961899_dress_3.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961935_5051606223_1.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "shirt",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961935_top, t-shirt, sweatshirt_3.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961954_images_4.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961954_pants_10.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "shirt",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961954_top, t-shirt, sweatshirt_1.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963403.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963403_jacket_6.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "clothing",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963483_81d2f6e709b55cd5c16297cacb1e362f.jpg",
+    "score": 0.8
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963483_dress_3.jpg",
+    "score": 0.8
+  }
+]
