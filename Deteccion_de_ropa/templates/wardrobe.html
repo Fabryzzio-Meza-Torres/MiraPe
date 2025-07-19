@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Armario - MiraPe</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --cream: #faf7f2;
+        --pastel-blue: #e6f3ff;
+        --light-blue: #b8e6ff;
+        --pale-gold: #e8d5b7;
+        --gold-accent: #d4af37;
+        --text-dark: #2c2c2c;
+        --text-medium: #5a5a5a;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --blue-accent: #7db8e8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--cream) 0%,
+          var(--pastel-blue) 50%,
+          var(--light-blue) 100%
+        );
+        min-height: 100vh;
+        color: var(--text-dark);
+        line-height: 1.6;
+        padding-top: 80px;
+      }
+
+      /* Header simplificado para esta vista */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(216, 216, 216, 0.3);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .back-button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--blue-accent);
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .back-button:hover {
+        background: var(--gold-accent);
+        transform: translateY(-2px);
+      }
+
+      .app-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        letter-spacing: -0.01em;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: var(--text-dark);
+        margin-bottom: 50px;
+        letter-spacing: -0.02em;
+      }
+
+      .page-title i {
+        margin-right: 15px;
+        color: var(--blue-accent);
+      }
+
+      .section {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 20px 60px var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--pastel-blue),
+          var(--blue-accent),
+          var(--pastel-blue)
+        );
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        color: var(--text-dark);
+        margin-bottom: 30px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .upload-section {
+        text-align: center;
+        border: 2px dashed var(--blue-accent);
+        padding: 40px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--cream), var(--pastel-blue));
+        margin-bottom: 30px;
+      }
+
+      .file-input {
+        margin-bottom: 20px;
+      }
+
+      input[type="file"] {
+        padding: 12px 20px;
+        border: 2px solid var(--blue-accent);
+        border-radius: 12px;
+        background: white;
+        color: var(--text-dark);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      input[type="file"]:hover {
+        border-color: var(--gold-accent);
+        box-shadow: 0 4px 15px rgba(125, 184, 232, 0.3);
+      }
+
+      .user-image-container {
+        position: relative;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      #userImage {
+        max-width: 350px;
+        max-height: 450px;
+        border: 3px solid var(--blue-accent);
+        border-radius: 16px;
+        box-shadow: 0 15px 35px var(--shadow);
+      }
+
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 3px solid var(--blue-accent);
+        border-radius: 16px;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .clothing-item {
+        border: 2px solid var(--pastel-blue);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .clothing-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--pastel-blue),
+          var(--blue-accent)
+        );
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .clothing-item:hover {
+        border-color: var(--blue-accent);
+        background: var(--pastel-blue);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(125, 184, 232, 0.3);
+      }
+
+      .clothing-item:hover::before {
+        transform: scaleX(1);
+      }
+
+      .clothing-item img {
+        width: 100%;
+        max-width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        border: 1px solid var(--pastel-blue);
+      }
+
+      .clothing-name {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        text-transform: capitalize;
+      }
+
+      .clothing-details {
+        color: var(--text-medium);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      .color-palette {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+      }
+
+      .color-swatch {
+        width: 25px;
+        height: 25px;
+        border-radius: 6px;
+        border: 2px solid var(--pastel-blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
+      }
+
+      .color-swatch:hover {
+        transform: scale(1.2);
+      }
+
+      .controls {
+        margin-top: 30px;
+        text-align: center;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        background: linear-gradient(
+          135deg,
+          var(--blue-accent),
+          var(--light-blue)
+        );
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn:hover {
+        background: linear-gradient(135deg, var(--gold-accent), #e6c068);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(125, 184, 232, 0.4);
+      }
+
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .btn-secondary {
+        background: linear-gradient(
+          135deg,
+          var(--pale-gold),
+          var(--gold-accent)
+        );
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #28a745, #20c997);
+      }
+
+      .adjustment-controls {
+        margin: 30px 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px;
+        background: var(--pastel-blue);
+        border-radius: 16px;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .control-group label {
+        font-size: 0.9rem;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      input[type="range"] {
+        width: 100px;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--light-blue);
+        outline: none;
+        cursor: pointer;
+      }
+
+      .loading {
+        text-align: center;
+        color: var(--text-medium);
+        font-style: italic;
+        font-size: 1.1rem;
+        padding: 40px;
+      }
+
+      .placeholder-text {
+        color: var(--text-medium);
+        font-style: italic;
+        font-size: 1.1rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .section {
+          padding: 25px;
+        }
+
+        .gallery {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 20px;
+        }
+
+        #userImage {
+          max-width: 280px;
+          max-height: 350px;
+        }
+
+        .controls {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          min-width: 200px;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="back-button">
+          <i class="fas fa-arrow-left"></i>
+          <span>Volver al Espejo</span>
+        </a>
+        <div class="app-title">Mi Armario Virtual</div>
+        <div></div>
+      </div>
+    </header>
+
+    <div class="container">
+      <h1 class="page-title">
+        <i class="fas fa-tshirt"></i>
+        Mi Armario Virtual
+      </h1>
+
+      <div class="section">
+        <h2 class="section-title">
+          <i class="fas fa-camera"></i>
+          Prueba Virtual
+        </h2>
+        <div class="upload-section">
+          <div class="file-input">
+            <input type="file" id="fileInput" accept="image/*" />
+          </div>
+          <div
+            class="user-image-container"
+            id="userImageContainer"
+            style="display: none"
+          >
+            <img id="userImage" alt="Tu imagen" />
+            <canvas id="canvas"></canvas>
+          </div>
+          <div id="uploadPlaceholder" class="placeholder-text">
+            <i
+              class="fas fa-upload"
+              style="font-size: 2rem; margin-bottom: 10px; display: block"
+            ></i>
+            Selecciona una imagen para comenzar la prueba virtual
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="clearCanvas" class="btn" disabled>
+            <i class="fas fa-eraser"></i>
+            Limpiar Overlay
+          </button>
+          <button id="resetImage" class="btn btn-secondary" disabled>
+            <i class="fas fa-sync-alt"></i>
+            Cambiar Imagen
+          </button>
+          <button id="testCanvas" class="btn btn-success" disabled>
+            <i class="fas fa-play"></i>
+            Probar Canvas
+          </button>
+          <button
+            id="showAdjustments"
+            class="btn"
+            disabled
+            style="display: none"
+          >
+            <i class="fas fa-sliders-h"></i>
+            Ajustar Posición
+          </button>
+        </div>
+
+        <div
+          class="adjustment-controls"
+          id="adjustmentControls"
+          style="display: none"
+        >
+          <div class="control-group">
+            <label><i class="fas fa-expand-arrows-alt"></i> Tamaño</label>
+            <input
+              type="range"
+              id="scaleSlider"
+              min="0.1"
+              max="2"
+              step="0.1"
+              value="1"
+            />
+          </div>
+          <div class="control-group">
+            <label><i class="fas fa-arrows-alt-h"></i> Posición X</label>
+            <input
+              type="range"
+              id="xSlider"
+              min="-100"
+              max="100"
+              step="5"
+              value="0"
+            />
+          </div>
+          <div class="control-group">
+            <label><i class="fas fa-arrows-alt-v"></i> Posición Y</label>
+            <input
+              type="range"
+              id="ySlider"
+              min="-100"
+              max="100"
+              step="5"
+              value="0"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <i class="fas fa-shopping-bag"></i>
+          Prendas Detectadas
+        </h2>
+        <div id="gallery" class="gallery">
+          <div class="loading">
+            <i
+              class="fas fa-spinner fa-spin"
+              style="font-size: 2rem; margin-bottom: 10px; display: block"
+            ></i>
+            Cargando prendas del armario...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let clothingData = [];
+      let userImageElement = null;
+      let canvas = null;
+      let ctx = null;
+      let currentClothingType = "";
+      let currentClothingImg = null;
+      let adjustmentScale = 1;
+      let adjustmentX = 0;
+      let adjustmentY = 0;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeApp();
+      });
+
+      function initializeApp() {
+        setupFileInput();
+        setupCanvas();
+        setupButtons();
+        loadClothingData();
+      }
+
+      function setupFileInput() {
+        const fileInput = document.getElementById("fileInput");
+        fileInput.addEventListener("change", handleFileSelect);
+      }
+
+      function setupCanvas() {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+      }
+
+      function setupButtons() {
+        document
+          .getElementById("clearCanvas")
+          .addEventListener("click", clearCanvas);
+        document
+          .getElementById("resetImage")
+          .addEventListener("click", resetImage);
+
+        document
+          .getElementById("testCanvas")
+          .addEventListener("click", function () {
+            console.log("Probando canvas...");
+            ctx.fillStyle = "rgba(125, 184, 232, 0.5)";
+            ctx.fillRect(50, 50, 100, 100);
+            console.log("Rectángulo azul dibujado en canvas");
+          });
+
+        document
+          .getElementById("showAdjustments")
+          .addEventListener("click", function () {
+            const controls = document.getElementById("adjustmentControls");
+            if (controls.style.display === "flex") {
+              controls.style.display = "none";
+              this.innerHTML =
+                '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+            } else {
+              controls.style.display = "flex";
+              this.innerHTML =
+                '<i class="fas fa-eye-slash"></i> Ocultar Ajustes';
+            }
+          });
+
+        document
+          .getElementById("scaleSlider")
+          .addEventListener("input", function (e) {
+            adjustmentScale = parseFloat(e.target.value);
+            if (currentClothingImg) redrawClothing();
+          });
+
+        document
+          .getElementById("xSlider")
+          .addEventListener("input", function (e) {
+            adjustmentX = parseInt(e.target.value);
+            if (currentClothingImg) redrawClothing();
+          });
+
+        document
+          .getElementById("ySlider")
+          .addEventListener("input", function (e) {
+            adjustmentY = parseInt(e.target.value);
+            if (currentClothingImg) redrawClothing();
+          });
+      }
+
+      function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            displayUserImage(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function displayUserImage(imageSrc) {
+        const userImageContainer =
+          document.getElementById("userImageContainer");
+        const userImage = document.getElementById("userImage");
+        const placeholder = document.getElementById("uploadPlaceholder");
+
+        userImage.src = imageSrc;
+        userImage.onload = function () {
+          setupCanvasSize();
+          userImageContainer.style.display = "inline-block";
+          placeholder.style.display = "none";
+          enableButtons();
+        };
+      }
+
+      function setupCanvasSize() {
+        const userImage = document.getElementById("userImage");
+        console.log(
+          "setupCanvasSize - userImage dimensiones:",
+          userImage.clientWidth,
+          "x",
+          userImage.clientHeight
+        );
+
+        canvas.width = userImage.clientWidth;
+        canvas.height = userImage.clientHeight;
+        canvas.style.width = userImage.clientWidth + "px";
+        canvas.style.height = userImage.clientHeight + "px";
+
+        console.log("Canvas configurado:", canvas.width, "x", canvas.height);
+      }
+
+      function enableButtons() {
+        document.getElementById("clearCanvas").disabled = false;
+        document.getElementById("resetImage").disabled = false;
+        document.getElementById("testCanvas").disabled = false;
+      }
+
+      function disableButtons() {
+        document.getElementById("clearCanvas").disabled = true;
+        document.getElementById("resetImage").disabled = true;
+        document.getElementById("testCanvas").disabled = true;
+      }
+
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        currentClothingImg = null;
+        document.getElementById("adjustmentControls").style.display = "none";
+        document.getElementById("showAdjustments").style.display = "none";
+        document.getElementById("showAdjustments").disabled = true;
+        document.getElementById("showAdjustments").innerHTML =
+          '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+        resetAdjustmentControls();
+      }
+
+      function resetAdjustmentControls() {
+        adjustmentScale = 1;
+        adjustmentX = 0;
+        adjustmentY = 0;
+        document.getElementById("scaleSlider").value = 1;
+        document.getElementById("xSlider").value = 0;
+        document.getElementById("ySlider").value = 0;
+      }
+
+      function redrawClothing() {
+        if (currentClothingImg) {
+          drawClothingOnCanvas(currentClothingImg);
+        }
+      }
+
+      function resetImage() {
+        const userImageContainer =
+          document.getElementById("userImageContainer");
+        const placeholder = document.getElementById("uploadPlaceholder");
+        const fileInput = document.getElementById("fileInput");
+
+        userImageContainer.style.display = "none";
+        placeholder.style.display = "block";
+        fileInput.value = "";
+        clearCanvas();
+        disableButtons();
+      }
+
+      async function loadClothingData() {
+        try {
+          const response = await fetch("/wardrobe-data");
+          clothingData = await response.json();
+          displayGallery();
+        } catch (error) {
+          console.error("Error loading clothing data:", error);
+          document.getElementById("gallery").innerHTML =
+            '<div class="loading"><i class="fas fa-exclamation-triangle" style="color: #e74c3c; font-size: 2rem; margin-bottom: 10px; display: block;"></i>Error al cargar las prendas del armario</div>';
+        }
+      }
+
+      function displayGallery() {
+        const gallery = document.getElementById("gallery");
+
+        if (clothingData.length === 0) {
+          gallery.innerHTML =
+            '<div class="loading"><i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>No hay prendas disponibles en tu armario<br><small style="margin-top: 10px; display: block;">Usa el Espejo Inteligente para detectar y agregar prendas</small></div>';
+          return;
+        }
+
+        gallery.innerHTML = "";
+
+        clothingData.forEach((item) => {
+          const clothingElement = createClothingElement(item);
+          gallery.appendChild(clothingElement);
+        });
+      }
+
+      function createClothingElement(item) {
+        const div = document.createElement("div");
+        div.className = "clothing-item";
+        div.onclick = () => applyClothing(item);
+
+        const hexColor = rgbToHex(
+          item.color_rgb[0],
+          item.color_rgb[1],
+          item.color_rgb[2]
+        );
+        const imagePath = item.img_path.replace("upload_images/", "");
+
+        div.innerHTML = `
+                <img src="/upload_images/${imagePath}" alt="${
+          item.tipo
+        }" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbjwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjY1JSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+bm8gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4='">
+                <div class="clothing-name">${item.tipo}</div>
+                <div class="clothing-details">
+                    <strong>${item.color_name}</strong><br>
+                    <small>Confianza: ${(item.score * 100).toFixed(1)}%</small>
+                </div>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background-color: ${hexColor}" title="${
+          item.color_name
+        } - RGB(${item.color_rgb.join(", ")})"></div>
+                </div>
+            `;
+
+        return div;
+      }
+
+      function rgbToHex(r, g, b) {
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
+      }
+
+      function applyClothing(item) {
+        console.log("applyClothing llamado con:", item);
+
+        const userImage = document.getElementById("userImage");
+
+        if (!userImage.src || userImage.style.display === "none") {
+          alert("Por favor, sube una imagen primero");
+          return;
+        }
+
+        currentClothingType = item.tipo;
+        resetAdjustmentControls();
+
+        const clothingImg = new Image();
+        clothingImg.crossOrigin = "anonymous";
+        clothingImg.onload = function () {
+          console.log("Imagen de ropa cargada exitosamente");
+          currentClothingImg = clothingImg;
+          drawClothingOnCanvas(clothingImg);
+          document.getElementById("showAdjustments").style.display =
+            "inline-block";
+          document.getElementById("showAdjustments").disabled = false;
+        };
+        clothingImg.onerror = function () {
+          console.error("Error loading clothing image:", item.img_path);
+          alert("Error al cargar la imagen de la prenda");
+        };
+        const imagePath = item.img_path.replace("upload_images/", "");
+        clothingImg.src = `/upload_images/${imagePath}`;
+      }
+
+      function drawClothingOnCanvas(clothingImg) {
+        console.log("drawClothingOnCanvas llamado");
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        let scaledWidth, scaledHeight, x, y;
+
+        const clothingType = currentClothingType.toLowerCase();
+
+        // Posicionamiento inteligente basado en tipo de prenda
+        if (
+          clothingType.includes("glasses") ||
+          clothingType.includes("sunglasses")
+        ) {
+          scaledWidth = canvasWidth * 0.3;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.15;
+        } else if (
+          clothingType.includes("hat") ||
+          clothingType.includes("cap") ||
+          clothingType.includes("hood")
+        ) {
+          scaledWidth = canvasWidth * 0.6;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.02;
+        } else if (
+          clothingType.includes("jacket") ||
+          clothingType.includes("shirt") ||
+          clothingType.includes("blouse") ||
+          clothingType.includes("top") ||
+          clothingType.includes("t-shirt") ||
+          clothingType.includes("sweatshirt")
+        ) {
+          scaledWidth = canvasWidth * 0.7;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.25;
+        } else if (
+          clothingType.includes("pants") ||
+          clothingType.includes("jeans") ||
+          clothingType.includes("trousers")
+        ) {
+          scaledWidth = canvasWidth * 0.6;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.5;
+        } else if (
+          clothingType.includes("shoes") ||
+          clothingType.includes("boots") ||
+          clothingType.includes("sneakers")
+        ) {
+          scaledWidth = canvasWidth * 0.4;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.8;
+        } else {
+          // Posición por defecto
+          const scaleX = canvasWidth / clothingImg.width;
+          const scaleY = canvasHeight / clothingImg.height;
+          const scale = Math.min(scaleX, scaleY) * 0.6;
+
+          scaledWidth = clothingImg.width * scale;
+          scaledHeight = clothingImg.height * scale;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = (canvasHeight - scaledHeight) / 2;
+        }
+
+        // Aplicar ajustes del usuario
+        scaledWidth *= adjustmentScale;
+        scaledHeight *= adjustmentScale;
+        x += adjustmentX;
+        y += adjustmentY;
+
+        ctx.drawImage(clothingImg, x, y, scaledWidth, scaledHeight);
+        console.log("Imagen dibujada en canvas");
+      }
+
+      window.addEventListener("resize", function () {
+        const userImage = document.getElementById("userImage");
+        if (userImage.src && userImage.style.display !== "none") {
+          setTimeout(setupCanvasSize, 100);
+        }
+      });
+    </script>
+  </body>
+</html>

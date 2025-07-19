@@ -964,7 +964,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-view="wardrobe">
+          <a class="nav-link" href="/wardrobe-view">
             <i class="nav-icon fas fa-tshirt"></i>
             <span>Mi Armario</span>
           </a>
@@ -1277,9 +1277,15 @@
       // Event listeners para los enlaces de navegación
       navLinks.forEach((link) => {
         link.addEventListener("click", (e) => {
-          e.preventDefault();
           const viewId = link.getAttribute("data-view");
-          showView(viewId);
+          const href = link.getAttribute("href");
+
+          // Solo interceptar si tiene data-view y no tiene href para navegación externa
+          if (viewId && (!href || href === "#")) {
+            e.preventDefault();
+            showView(viewId);
+          }
+          // Si tiene href (como /wardrobe-view), dejarlo navegar normalmente
         });
       });
 

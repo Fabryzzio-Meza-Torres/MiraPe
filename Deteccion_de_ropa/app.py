@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory, render_template, abort
 import os
 import time
 import json
@@ -322,6 +322,146 @@ def validate_and_enhance_color(rgb_color, item_type):
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/wardrobe-view")
+def wardrobe_view():
+    """Ruta para mostrar el armario virtual"""
+    return render_template("wardrobe.html")
+
+
+@app.route("/wardrobe-test")
+def wardrobe_test():
+    """Ruta de prueba para el armario virtual"""
+    return render_template("wardrobe_simple.html")
+
+
+@app.route("/debug-wardrobe")
+def debug_wardrobe():
+    """Ruta de debug para verificar los datos del armario"""
+    try:
+        # Verificar ruta de Mariel
+        mariel_metadata_path = os.path.join(
+            os.path.dirname(__file__), "..", "Mariel", "metadata.json"
+        )
+        mariel_metadata_path = os.path.abspath(mariel_metadata_path)
+
+        debug_info = {
+            "mariel_path": mariel_metadata_path,
+            "mariel_exists": os.path.exists(mariel_metadata_path),
+            "current_dir": os.getcwd(),
+            "file_dir": os.path.dirname(__file__),
+        }
+
+        if os.path.exists(mariel_metadata_path):
+            with open(mariel_metadata_path, "r", encoding="utf-8") as f:
+                mariel_data = json.load(f)
+            debug_info["mariel_data"] = mariel_data
+            debug_info["mariel_count"] = len(mariel_data)
+
+        # Verificar datos locales
+        local_paths = ["data/wardrobe_updated.json", "data/wardrobe.json"]
+
+        for path in local_paths:
+            debug_info[f"local_{path.replace('/', '_')}_exists"] = os.path.exists(path)
+            if os.path.exists(path):
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    debug_info[f"local_{path.replace('/', '_')}_count"] = len(data)
+                except Exception as e:
+                    debug_info[f"local_{path.replace('/', '_')}_error"] = str(e)
+
+        return jsonify(debug_info)
+
+    except Exception as e:
+        return jsonify({"error": str(e), "traceback": str(e.__traceback__)})
+
+
+@app.route("/wardrobe-data")
+def get_wardrobe_data():
+    """API para obtener datos del armario"""
+    try:
+        # Intentar cargar datos del proyecto Mariel primero
+        mariel_metadata_path = os.path.join(
+            os.path.dirname(__file__), "..", "Mariel", "metadata.json"
+        )
+        mariel_metadata_path = os.path.abspath(mariel_metadata_path)
+
+        if os.path.exists(mariel_metadata_path):
+            with open(mariel_metadata_path, "r", encoding="utf-8") as f:
+                mariel_data = json.load(f)
+
+            # Convertir formato de Mariel al formato esperado por la aplicación
+            converted_data = []
+            for item in mariel_data:
+                # Convertir hex a RGB para el primer color
+                hex_color = item["colores"][0]
+                rgb = tuple(int(hex_color[i : i + 2], 16) for i in (1, 3, 5))
+
+                converted_item = {
+                    "tipo": item["category"].rstrip(
+                        "s"
+                    ),  # remover plural (camisetas -> camiseta)
+                    "color_rgb": list(rgb),
+                    "color_name": item["color"],
+                    "img_path": f"upload_images/{item['image']}",
+                    "score": 0.95,  # Score alto para datos de Mariel
+                }
+                converted_data.append(converted_item)
+
+            print(
+                f"✅ Cargado metadata.json de Mariel con {len(converted_data)} entradas"
+            )
+            return jsonify(converted_data)
+
+        # Si no existe Mariel, intentar con datos locales
+        try:
+            with open("data/wardrobe_updated.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+            print(f"✅ Cargado wardrobe_updated.json con {len(data)} entradas")
+        except FileNotFoundError:
+            # Si no existe, usar el original
+            with open("data/wardrobe.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+            print(f"⚠️ Usando wardrobe.json original con {len(data)} entradas")
+
+        return jsonify(data)
+    except FileNotFoundError:
+        print("❌ No se encontró ningún archivo de datos del armario")
+        return jsonify([])
+    except Exception as e:
+        print(f"❌ Error cargando datos del armario: {e}")
+        return jsonify([])
+
+
+@app.route("/upload_images/<path:filename>")
+def serve_upload_image(filename):
+    """Sirve las imágenes del armario"""
+    try:
+        # Primero intentar desde la carpeta uploads local
+        uploads_path = os.path.join(os.getcwd(), "uploads")
+        if os.path.exists(uploads_path) and os.path.exists(
+            os.path.join(uploads_path, filename)
+        ):
+            return send_from_directory(uploads_path, filename)
+
+        # Si no, intentar desde Mariel
+        mariel_upload_path = os.path.join(
+            os.path.dirname(__file__), "..", "Mariel", "upload_images"
+        )
+        mariel_upload_path = os.path.abspath(mariel_upload_path)
+
+        if os.path.exists(mariel_upload_path) and os.path.exists(
+            os.path.join(mariel_upload_path, filename)
+        ):
+            return send_from_directory(mariel_upload_path, filename)
+
+        print(f"❌ Imagen no encontrada: {filename}")
+        abort(404)
+    except Exception as e:
+        print(f"Error serving image {filename}: {e}")
+        abort(404)
 
 
 @app.route("/upload", methods=["POST"])

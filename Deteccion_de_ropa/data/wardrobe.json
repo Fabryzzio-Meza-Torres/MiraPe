@@ -460,5 +460,49 @@
     "color_name": "Rojo",
     "img_path": "upload_images/1752963515_top, t-shirt, sweatshirt_4.jpg",
     "score": 0.9657996296882629
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      67,
+      59,
+      55
+    ],
+    "color_name": "Color indefinido (R:67, G:59, B:55)",
+    "img_path": "upload_images/1752966119_glasses_6.jpg",
+    "score": 0.9026608467102051
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      212,
+      175,
+      137
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752966119_jacket_7.jpg",
+    "score": 0.6004485487937927
+  },
+  {
+    "tipo": "glasses",
+    "color_rgb": [
+      70,
+      61,
+      56
+    ],
+    "color_name": "Color indefinido (R:70, G:61, B:56)",
+    "img_path": "upload_images/1752966119_glasses_8.jpg",
+    "score": 0.6409372687339783
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      209,
+      170,
+      132
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752966119_shirt, blouse_9.jpg",
+    "score": 0.584182858467102
   }
 ]
