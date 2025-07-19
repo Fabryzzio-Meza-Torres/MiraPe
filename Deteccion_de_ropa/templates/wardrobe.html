@@ -627,24 +627,24 @@
 
       function setupButtons() {
         console.log("Configurando botones...");
-        
+
         const clearBtn = document.getElementById("clearCanvas");
         const resetBtn = document.getElementById("resetImage");
         const testBtn = document.getElementById("testCanvas");
         const adjustBtn = document.getElementById("showAdjustments");
-        
+
         console.log("Botones encontrados:", {
           clearBtn: !!clearBtn,
-          resetBtn: !!resetBtn, 
+          resetBtn: !!resetBtn,
           testBtn: !!testBtn,
-          adjustBtn: !!adjustBtn
+          adjustBtn: !!adjustBtn,
         });
 
         if (clearBtn) {
           clearBtn.addEventListener("click", clearCanvas);
           console.log("Event listener agregado a clearCanvas");
         }
-        
+
         if (resetBtn) {
           resetBtn.addEventListener("click", resetImage);
           console.log("Event listener agregado a resetImage");
@@ -654,11 +654,16 @@
           testBtn.addEventListener("click", function () {
             console.log("Probando canvas...");
             if (ctx && canvas) {
-              console.log("Canvas disponible, dimensiones:", canvas.width, "x", canvas.height);
+              console.log(
+                "Canvas disponible, dimensiones:",
+                canvas.width,
+                "x",
+                canvas.height
+              );
               ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
               ctx.fillRect(50, 50, 100, 100);
               console.log("Rectángulo rojo dibujado en canvas");
-              
+
               // Dibujar un círculo también para verificar
               ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
               ctx.beginPath();
@@ -681,10 +686,12 @@
             if (controls) {
               if (controls.style.display === "flex") {
                 controls.style.display = "none";
-                this.innerHTML = '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+                this.innerHTML =
+                  '<i class="fas fa-sliders-h"></i> Ajustar Posición';
               } else {
                 controls.style.display = "flex";
-                this.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Ajustes';
+                this.innerHTML =
+                  '<i class="fas fa-eye-slash"></i> Ocultar Ajustes';
               }
             } else {
               console.error("No se encontró adjustmentControls");
@@ -739,25 +746,33 @@
 
       function displayUserImage(imageSrc) {
         console.log("displayUserImage() llamado");
-        const userImageContainer = document.getElementById("userImageContainer");
+        const userImageContainer =
+          document.getElementById("userImageContainer");
         const userImage = document.getElementById("userImage");
         const placeholder = document.getElementById("uploadPlaceholder");
 
         if (!userImage || !userImageContainer || !placeholder) {
-          console.error("Elementos necesarios no encontrados para mostrar imagen");
+          console.error(
+            "Elementos necesarios no encontrados para mostrar imagen"
+          );
           return;
         }
 
         userImage.src = imageSrc;
         userImage.onload = function () {
           console.log("Imagen de usuario cargada exitosamente");
-          console.log("Dimensiones de la imagen:", userImage.naturalWidth, "x", userImage.naturalHeight);
+          console.log(
+            "Dimensiones de la imagen:",
+            userImage.naturalWidth,
+            "x",
+            userImage.naturalHeight
+          );
           setupCanvasSize();
           userImageContainer.style.display = "inline-block";
           placeholder.style.display = "none";
           enableButtons();
         };
-        userImage.onerror = function() {
+        userImage.onerror = function () {
           console.error("Error al cargar imagen de usuario");
         };
       }
@@ -768,7 +783,7 @@
           console.error("No se encontró userImage para configurar canvas");
           return;
         }
-        
+
         if (!canvas) {
           console.error("Canvas no está disponible");
           return;
@@ -797,7 +812,7 @@
         const clearBtn = document.getElementById("clearCanvas");
         const resetBtn = document.getElementById("resetImage");
         const testBtn = document.getElementById("testCanvas");
-        
+
         if (clearBtn) {
           clearBtn.disabled = false;
           console.log("clearCanvas habilitado");
@@ -817,7 +832,7 @@
         const clearBtn = document.getElementById("clearCanvas");
         const resetBtn = document.getElementById("resetImage");
         const testBtn = document.getElementById("testCanvas");
-        
+
         if (clearBtn) clearBtn.disabled = true;
         if (resetBtn) resetBtn.disabled = true;
         if (testBtn) testBtn.disabled = true;
@@ -831,22 +846,24 @@
         } else {
           console.error("Canvas o contexto no disponible para limpiar");
         }
-        
+
         currentClothingImg = null;
-        
-        const adjustmentControls = document.getElementById("adjustmentControls");
+
+        const adjustmentControls =
+          document.getElementById("adjustmentControls");
         const showAdjustments = document.getElementById("showAdjustments");
-        
+
         if (adjustmentControls) {
           adjustmentControls.style.display = "none";
         }
-        
+
         if (showAdjustments) {
           showAdjustments.style.display = "none";
           showAdjustments.disabled = true;
-          showAdjustments.innerHTML = '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+          showAdjustments.innerHTML =
+            '<i class="fas fa-sliders-h"></i> Ajustar Posición';
         }
-        
+
         resetAdjustmentControls();
         console.log("Canvas y controles reiniciados");
       }
@@ -868,7 +885,8 @@
 
       function resetImage() {
         console.log("resetImage() llamado");
-        const userImageContainer = document.getElementById("userImageContainer");
+        const userImageContainer =
+          document.getElementById("userImageContainer");
         const placeholder = document.getElementById("uploadPlaceholder");
         const fileInput = document.getElementById("fileInput");
 
@@ -881,7 +899,7 @@
         if (fileInput) {
           fileInput.value = "";
         }
-        
+
         clearCanvas();
         disableButtons();
         console.log("Imagen reiniciada");
@@ -957,14 +975,22 @@
         console.log("🎯 applyClothing llamado con:", item);
 
         const userImage = document.getElementById("userImage");
-        const userImageContainer = document.getElementById("userImageContainer");
-        
+        const userImageContainer =
+          document.getElementById("userImageContainer");
+
         console.log("userImage encontrado:", userImage);
         console.log("userImageContainer encontrado:", userImageContainer);
         console.log("userImage.src:", userImage?.src);
-        console.log("userImageContainer.style.display:", userImageContainer?.style.display);
+        console.log(
+          "userImageContainer.style.display:",
+          userImageContainer?.style.display
+        );
 
-        if (!userImage || !userImage.src || userImageContainer?.style.display === "none") {
+        if (
+          !userImage ||
+          !userImage.src ||
+          userImageContainer?.style.display === "none"
+        ) {
           alert("Por favor, sube una imagen primero");
           return;
         }
@@ -982,12 +1008,17 @@
 
         const clothingImg = new Image();
         clothingImg.crossOrigin = "anonymous";
-        
+
         clothingImg.onload = function () {
           console.log("✅ Imagen de ropa cargada exitosamente");
-          console.log("Dimensiones:", clothingImg.width, "x", clothingImg.height);
+          console.log(
+            "Dimensiones:",
+            clothingImg.width,
+            "x",
+            clothingImg.height
+          );
           currentClothingImg = clothingImg;
-          
+
           // Verificar que el canvas tenga dimensiones válidas
           if (canvas.width === 0 || canvas.height === 0) {
             console.log("⚠️ Canvas sin dimensiones, reconfigurando...");
@@ -999,19 +1030,19 @@
           } else {
             drawClothingOnCanvas(clothingImg);
           }
-          
+
           const adjustBtn = document.getElementById("showAdjustments");
           if (adjustBtn) {
             adjustBtn.style.display = "inline-block";
             adjustBtn.disabled = false;
           }
         };
-        
+
         clothingImg.onerror = function () {
           console.error("❌ Error loading clothing image:", item.img_path);
           alert("Error al cargar la imagen de la prenda");
         };
-        
+
         const imagePath = item.img_path.replace("upload_images/", "");
         console.log("🔗 Ruta final de imagen:", `/upload_images/${imagePath}`);
         clothingImg.src = `/upload_images/${imagePath}`;
@@ -1022,7 +1053,12 @@
         console.log("Canvas:", canvas);
         console.log("Context:", ctx);
         console.log("Canvas dimensiones:", canvas.width, "x", canvas.height);
-        console.log("Imagen de ropa dimensiones:", clothingImg.width, "x", clothingImg.height);
+        console.log(
+          "Imagen de ropa dimensiones:",
+          clothingImg.width,
+          "x",
+          clothingImg.height
+        );
 
         if (!canvas || !ctx) {
           console.error("Canvas o contexto no disponible");

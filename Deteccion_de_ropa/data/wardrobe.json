@@ -504,5 +504,27 @@
     "color_name": "Rosa",
     "img_path": "upload_images/1752966119_shirt, blouse_9.jpg",
     "score": 0.584182858467102
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      237,
+      175,
+      183
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752969106_top, t-shirt, sweatshirt_3.jpg",
+    "score": 0.8682522773742676
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      30,
+      27,
+      30
+    ],
+    "color_name": "Negro",
+    "img_path": "upload_images/1752969106_pants_5.jpg",
+    "score": 0.9705595374107361
   }
 ]
