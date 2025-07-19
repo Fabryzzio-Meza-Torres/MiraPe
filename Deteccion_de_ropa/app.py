@@ -336,6 +336,37 @@ def wardrobe_test():
     return render_template("wardrobe_simple.html")
 
 
+@app.route("/test-image-paths")
+def test_image_paths():
+    """Test para verificar rutas de imágenes"""
+    import os
+
+    current_dir = os.getcwd()
+    file_dir = os.path.dirname(__file__)
+
+    # Ruta que estamos usando para Mariel
+    mariel_upload_path = os.path.join(file_dir, "..", "Mariel", "upload_images")
+    mariel_upload_path = os.path.abspath(mariel_upload_path)
+
+    test_info = {
+        "current_dir": current_dir,
+        "file_dir": file_dir,
+        "mariel_upload_path": mariel_upload_path,
+        "mariel_upload_exists": os.path.exists(mariel_upload_path),
+    }
+
+    # Listar archivos en esa ruta
+    if os.path.exists(mariel_upload_path):
+        test_info["files_in_mariel"] = os.listdir(mariel_upload_path)
+
+        # Probar ruta específica de camiseta_azul.svg
+        test_file = os.path.join(mariel_upload_path, "camiseta_azul.svg")
+        test_info["camiseta_azul_path"] = test_file
+        test_info["camiseta_azul_exists"] = os.path.exists(test_file)
+
+    return jsonify(test_info)
+
+
 @app.route("/debug-wardrobe")
 def debug_wardrobe():
     """Ruta de debug para verificar los datos del armario"""
@@ -346,12 +377,23 @@ def debug_wardrobe():
         )
         mariel_metadata_path = os.path.abspath(mariel_metadata_path)
 
+        mariel_upload_path = os.path.join(
+            os.path.dirname(__file__), "..", "Mariel", "upload_images"
+        )
+        mariel_upload_path = os.path.abspath(mariel_upload_path)
+
         debug_info = {
-            "mariel_path": mariel_metadata_path,
-            "mariel_exists": os.path.exists(mariel_metadata_path),
+            "mariel_metadata_path": mariel_metadata_path,
+            "mariel_metadata_exists": os.path.exists(mariel_metadata_path),
+            "mariel_upload_path": mariel_upload_path,
+            "mariel_upload_exists": os.path.exists(mariel_upload_path),
             "current_dir": os.getcwd(),
             "file_dir": os.path.dirname(__file__),
         }
+
+        # Listar archivos en Mariel
+        if os.path.exists(mariel_upload_path):
+            debug_info["mariel_files"] = os.listdir(mariel_upload_path)
 
         if os.path.exists(mariel_metadata_path):
             with open(mariel_metadata_path, "r", encoding="utf-8") as f:
@@ -359,18 +401,18 @@ def debug_wardrobe():
             debug_info["mariel_data"] = mariel_data
             debug_info["mariel_count"] = len(mariel_data)
 
-        # Verificar datos locales
-        local_paths = ["data/wardrobe_updated.json", "data/wardrobe.json"]
-
-        for path in local_paths:
-            debug_info[f"local_{path.replace('/', '_')}_exists"] = os.path.exists(path)
-            if os.path.exists(path):
-                try:
-                    with open(path, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                    debug_info[f"local_{path.replace('/', '_')}_count"] = len(data)
-                except Exception as e:
-                    debug_info[f"local_{path.replace('/', '_')}_error"] = str(e)
+            # Verificar si cada imagen existe
+            debug_info["image_check"] = []
+            for item in mariel_data:
+                image_name = item["image"]
+                image_path = os.path.join(mariel_upload_path, image_name)
+                debug_info["image_check"].append(
+                    {
+                        "name": image_name,
+                        "path": image_path,
+                        "exists": os.path.exists(image_path),
+                    }
+                )
 
         return jsonify(debug_info)
 
@@ -382,51 +424,19 @@ def debug_wardrobe():
 def get_wardrobe_data():
     """API para obtener datos del armario"""
     try:
-        # Intentar cargar datos del proyecto Mariel primero
-        mariel_metadata_path = os.path.join(
-            os.path.dirname(__file__), "..", "Mariel", "metadata.json"
-        )
-        mariel_metadata_path = os.path.abspath(mariel_metadata_path)
-
-        if os.path.exists(mariel_metadata_path):
-            with open(mariel_metadata_path, "r", encoding="utf-8") as f:
-                mariel_data = json.load(f)
-
-            # Convertir formato de Mariel al formato esperado por la aplicación
-            converted_data = []
-            for item in mariel_data:
-                # Convertir hex a RGB para el primer color
-                hex_color = item["colores"][0]
-                rgb = tuple(int(hex_color[i : i + 2], 16) for i in (1, 3, 5))
-
-                converted_item = {
-                    "tipo": item["category"].rstrip(
-                        "s"
-                    ),  # remover plural (camisetas -> camiseta)
-                    "color_rgb": list(rgb),
-                    "color_name": item["color"],
-                    "img_path": f"upload_images/{item['image']}",
-                    "score": 0.95,  # Score alto para datos de Mariel
-                }
-                converted_data.append(converted_item)
-
-            print(
-                f"✅ Cargado metadata.json de Mariel con {len(converted_data)} entradas"
-            )
-            return jsonify(converted_data)
-
-        # Si no existe Mariel, intentar con datos locales
+        # Usar datos locales reales en lugar de los SVG de Mariel
         try:
             with open("data/wardrobe_updated.json", "r", encoding="utf-8") as f:
                 data = json.load(f)
             print(f"✅ Cargado wardrobe_updated.json con {len(data)} entradas")
+            return jsonify(data)
         except FileNotFoundError:
             # Si no existe, usar el original
             with open("data/wardrobe.json", "r", encoding="utf-8") as f:
                 data = json.load(f)
             print(f"⚠️ Usando wardrobe.json original con {len(data)} entradas")
+            return jsonify(data)
 
-        return jsonify(data)
     except FileNotFoundError:
         print("❌ No se encontró ningún archivo de datos del armario")
         return jsonify([])
@@ -439,25 +449,39 @@ def get_wardrobe_data():
 def serve_upload_image(filename):
     """Sirve las imágenes del armario"""
     try:
-        # Primero intentar desde la carpeta uploads local
-        uploads_path = os.path.join(os.getcwd(), "uploads")
-        if os.path.exists(uploads_path) and os.path.exists(
-            os.path.join(uploads_path, filename)
-        ):
-            return send_from_directory(uploads_path, filename)
+        print(f"🔍 Buscando imagen: {filename}")
 
-        # Si no, intentar desde Mariel
-        mariel_upload_path = os.path.join(
-            os.path.dirname(__file__), "..", "Mariel", "upload_images"
-        )
-        mariel_upload_path = os.path.abspath(mariel_upload_path)
+        # Buscar en la carpeta upload_images local
+        local_uploads_path = os.path.join(os.getcwd(), "upload_images")
+        local_file_path = os.path.join(local_uploads_path, filename)
+        print(f"   Intentando ruta local: {local_file_path}")
 
-        if os.path.exists(mariel_upload_path) and os.path.exists(
-            os.path.join(mariel_upload_path, filename)
-        ):
-            return send_from_directory(mariel_upload_path, filename)
+        if os.path.exists(local_file_path):
+            print(f"✅ Encontrada en ruta local")
+            # Configurar MIME type para diferentes tipos de archivo
+            if filename.lower().endswith(".svg"):
+                return send_from_directory(
+                    local_uploads_path, filename, mimetype="image/svg+xml"
+                )
+            elif filename.lower().endswith((".jpg", ".jpeg")):
+                return send_from_directory(
+                    local_uploads_path, filename, mimetype="image/jpeg"
+                )
+            elif filename.lower().endswith(".png"):
+                return send_from_directory(
+                    local_uploads_path, filename, mimetype="image/png"
+                )
+            else:
+                return send_from_directory(local_uploads_path, filename)
 
+        # Listar archivos disponibles para debug
         print(f"❌ Imagen no encontrada: {filename}")
+        if os.path.exists(local_uploads_path):
+            local_files = os.listdir(local_uploads_path)
+            print(
+                f"   Archivos disponibles: {local_files[:10]}"
+            )  # Solo mostrar primeros 10
+
         abort(404)
     except Exception as e:
         print(f"Error serving image {filename}: {e}")
@@ -578,11 +602,6 @@ def upload():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-@app.route("/upload_images/<filename>")
-def uploaded_file(filename):
-    return send_from_directory("upload_images", filename)
 
 
 @app.route("/wardrobe")
