@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Espejo Inteligente - MiraPe</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
       :root {
         --cream: #faf7f2;
@@ -34,6 +38,171 @@
         min-height: 100vh;
         color: var(--text-dark);
         line-height: 1.6;
+      }
+
+      /* Header y navegación */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(216, 216, 216, 0.3);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .menu-button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        color: var(--text-dark);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .menu-button:hover {
+        background: var(--pastel-blue);
+      }
+
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        width: 20px;
+        height: 20px;
+      }
+
+      .hamburger span {
+        width: 100%;
+        height: 2px;
+        background: var(--text-dark);
+        border-radius: 1px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      .app-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        letter-spacing: -0.01em;
+      }
+
+      /* Sidebar navegación */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 300px;
+        height: 100vh;
+        background: white;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding-top: 80px;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .nav-item {
+        border-bottom: 1px solid var(--pastel-blue);
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px 25px;
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .nav-link:hover {
+        background: var(--pastel-blue);
+        color: var(--text-dark);
+      }
+
+      .nav-link.active {
+        background: var(--blue-accent);
+        color: white;
+        border-right: 4px solid var(--gold-accent);
+      }
+
+      .nav-icon {
+        font-size: 18px;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Ajustar el contenido principal */
+      .main-content {
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
       }
 
       .mirror-container {
@@ -489,6 +658,89 @@
         transition: width 0.3s ease;
       }
 
+      /* Estilos para las vistas */
+      .view-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .view-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .view-header h1 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: var(--text-dark);
+        margin-bottom: 15px;
+        letter-spacing: -0.02em;
+      }
+
+      .view-header h1 i {
+        margin-right: 15px;
+        color: var(--blue-accent);
+      }
+
+      .view-header p {
+        font-size: 1.1rem;
+        color: var(--text-medium);
+        font-weight: 300;
+      }
+
+      .view-content {
+        background: white;
+        border-radius: 24px;
+        padding: 60px 40px;
+        box-shadow: 0 20px 60px var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .view-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--pastel-blue),
+          var(--blue-accent),
+          var(--pastel-blue)
+        );
+      }
+
+      .feature-placeholder {
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .feature-icon {
+        font-size: 4rem;
+        color: var(--blue-accent);
+        margin-bottom: 20px;
+        opacity: 0.7;
+      }
+
+      .feature-placeholder h3 {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        margin-bottom: 15px;
+      }
+
+      .feature-placeholder p {
+        font-size: 1.1rem;
+        color: var(--text-medium);
+        font-weight: 300;
+        max-width: 500px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
       @media (max-width: 1200px) {
         .video-container {
           max-width: 500px;
@@ -624,115 +876,339 @@
         .upload-section h3 {
           font-size: 1rem;
         }
+
+        /* Header responsive */
+        .header {
+          padding: 10px 15px;
+        }
+
+        .menu-button {
+          padding: 6px 10px;
+          font-size: 12px;
+        }
+
+        .hamburger {
+          width: 18px;
+          height: 18px;
+        }
+
+        .app-title {
+          font-size: 1rem;
+        }
+
+        /* Sidebar responsive */
+        .sidebar {
+          width: 280px;
+          left: -280px;
+        }
+
+        /* Vistas responsive */
+        .view-container {
+          padding: 20px 15px;
+        }
+
+        .view-header h1 {
+          font-size: 2rem;
+        }
+
+        .view-header h1 i {
+          margin-right: 10px;
+        }
+
+        .view-header p {
+          font-size: 1rem;
+        }
+
+        .view-content {
+          padding: 40px 20px;
+        }
+
+        .feature-icon {
+          font-size: 3rem;
+        }
+
+        .feature-placeholder h3 {
+          font-size: 1.5rem;
+        }
+
+        .feature-placeholder p {
+          font-size: 1rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="mirror-container">
-      <div class="camera-panel">
-        <h1>Espejo Inteligente</h1>
-
-        <div class="video-container">
-          <div id="cameraPlaceholder" class="camera-placeholder">
-            Presiona "Encender Cámara" para comenzar
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <button class="menu-button" id="menuToggle">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <video id="video" autoplay></video>
-        </div>
+          <span>Menú</span>
+        </button>
+        <div></div>
+        <!-- Espaciador para centrar el título -->
+      </div>
+    </header>
 
-        <div class="controls">
-          <button id="startCamera" class="btn-primary">
-            <i
-              class="fas fa-play"
-              style="font-size: 12px; margin-right: 6px"
-            ></i>
-            Encender Cámara
-          </button>
-          <button id="takePhoto" class="btn-photo" disabled>
-            <i
-              class="fas fa-camera"
-              style="font-size: 14px; margin-right: 6px"
-            ></i>
-            Tomar Foto
-          </button>
-          <button id="stopCamera" class="btn-danger" disabled>
-            <i
-              class="fas fa-stop"
-              style="font-size: 12px; margin-right: 6px"
-            ></i>
-            Apagar Cámara
-          </button>
-        </div>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a class="nav-link active" data-view="smart-mirror">
+            <i class="nav-icon fas fa-magic"></i>
+            <span>Espejo Inteligente</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-view="wardrobe">
+            <i class="nav-icon fas fa-tshirt"></i>
+            <span>Mi Armario</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-view="outfits">
+            <i class="nav-icon fas fa-palette"></i>
+            <span>Combinaciones</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-view="calendar">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <span>Agenda de Looks</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-view="community">
+            <i class="nav-icon fas fa-users"></i>
+            <span>Comunidad</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-view="settings">
+            <i class="nav-icon fas fa-cog"></i>
+            <span>Configuración</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-        <div class="upload-section">
-          <h3>
-            <i
-              class="fas fa-cloud-upload-alt"
-              style="
-                font-size: 16px;
-                margin-right: 8px;
-                color: var(--blue-accent);
-              "
-            ></i>
-            Subir imagen desde archivo
-          </h3>
-          <div class="file-input">
-            <input type="file" id="fileInput" accept="image/*" />
-            <button id="uploadFile" class="btn-primary">
-              <i
-                class="fas fa-image"
-                style="font-size: 12px; margin-right: 6px"
-              ></i>
-              Procesar Imagen
-            </button>
+    <!-- Overlay para cerrar sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <!-- Vista: Espejo Inteligente -->
+      <div class="view active" id="smart-mirror-view">
+        <div class="mirror-container">
+          <div class="camera-panel">
+            <h1>Espejo Inteligente</h1>
+
+            <div class="video-container">
+              <div id="cameraPlaceholder" class="camera-placeholder">
+                Presiona "Encender Cámara" para comenzar
+              </div>
+              <video id="video" autoplay></video>
+            </div>
+
+            <div class="controls">
+              <button id="startCamera" class="btn-primary">
+                <i
+                  class="fas fa-play"
+                  style="font-size: 12px; margin-right: 6px"
+                ></i>
+                Encender Cámara
+              </button>
+              <button id="takePhoto" class="btn-photo" disabled>
+                <i
+                  class="fas fa-camera"
+                  style="font-size: 14px; margin-right: 6px"
+                ></i>
+                Tomar Foto
+              </button>
+              <button id="stopCamera" class="btn-danger" disabled>
+                <i
+                  class="fas fa-stop"
+                  style="font-size: 12px; margin-right: 6px"
+                ></i>
+                Apagar Cámara
+              </button>
+            </div>
+
+            <div class="upload-section">
+              <h3>
+                <i
+                  class="fas fa-cloud-upload-alt"
+                  style="
+                    font-size: 16px;
+                    margin-right: 8px;
+                    color: var(--blue-accent);
+                  "
+                ></i>
+                Subir imagen desde archivo
+              </h3>
+              <div class="file-input">
+                <input type="file" id="fileInput" accept="image/*" />
+                <button id="uploadFile" class="btn-primary">
+                  <i
+                    class="fas fa-image"
+                    style="font-size: 12px; margin-right: 6px"
+                  ></i>
+                  Procesar Imagen
+                </button>
+              </div>
+            </div>
+
+            <div id="status" class="status"></div>
+          </div>
+
+          <div class="results-panel">
+            <div class="results">
+              <h3>
+                <i
+                  class="fas fa-search"
+                  style="
+                    font-size: 18px;
+                    margin-right: 8px;
+                    color: var(--gold-accent);
+                  "
+                ></i>
+                Análisis de Vestimenta
+              </h3>
+
+              <div id="statsBar" class="stats-bar" style="display: none">
+                <div class="stats-item">
+                  <span class="stats-label">Prendas detectadas:</span>
+                  <span class="stats-value" id="itemCount">0</span>
+                </div>
+                <div class="stats-item">
+                  <span class="stats-label">Confianza promedio:</span>
+                  <span class="stats-value" id="avgConfidence">0%</span>
+                </div>
+                <div class="stats-item">
+                  <span class="stats-label">Tiempo de análisis:</span>
+                  <span class="stats-value" id="analysisTime">-</span>
+                </div>
+              </div>
+
+              <div id="detectedItems" class="detected-items">
+                <p
+                  style="
+                    text-align: center;
+                    color: var(--text-medium);
+                    font-style: italic;
+                  "
+                >
+                  Las prendas detectadas aparecerán aquí
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div id="status" class="status"></div>
       </div>
 
-      <div class="results-panel">
-        <div class="results">
-          <h3>
-            <i
-              class="fas fa-search"
-              style="
-                font-size: 18px;
-                margin-right: 8px;
-                color: var(--gold-accent);
-              "
-            ></i>
-            Análisis de Vestimenta
-          </h3>
-
-          <div id="statsBar" class="stats-bar" style="display: none">
-            <div class="stats-item">
-              <span class="stats-label">Prendas detectadas:</span>
-              <span class="stats-value" id="itemCount">0</span>
-            </div>
-            <div class="stats-item">
-              <span class="stats-label">Confianza promedio:</span>
-              <span class="stats-value" id="avgConfidence">0%</span>
-            </div>
-            <div class="stats-item">
-              <span class="stats-label">Tiempo de análisis:</span>
-              <span class="stats-value" id="analysisTime">-</span>
-            </div>
+      <!-- Vista: Mi Armario -->
+      <div class="view" id="wardrobe-view">
+        <div class="view-container">
+          <div class="view-header">
+            <h1><i class="fas fa-tshirt"></i> Mi Armario</h1>
+            <p>Aquí podrás ver todas las prendas detectadas y organizadas</p>
           </div>
-
-          <div id="detectedItems" class="detected-items">
-            <p
-              style="
-                text-align: center;
-                color: var(--text-medium);
-                font-style: italic;
-              "
-            >
-              Las prendas detectadas aparecerán aquí
-            </p>
+          <div class="view-content">
+            <div class="feature-placeholder">
+              <i class="fas fa-tshirt feature-icon"></i>
+              <h3>Próximamente</h3>
+              <p>
+                Esta sección estará disponible pronto para gestionar tu armario
+                virtual
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- Vista: Combinaciones -->
+      <div class="view" id="outfits-view">
+        <div class="view-container">
+          <div class="view-header">
+            <h1><i class="fas fa-palette"></i> Combinaciones</h1>
+            <p>Crea y guarda combinaciones perfectas para cada ocasión</p>
+          </div>
+          <div class="view-content">
+            <div class="feature-placeholder">
+              <i class="fas fa-palette feature-icon"></i>
+              <h3>Próximamente</h3>
+              <p>
+                Aquí podrás crear outfits personalizados y recibir sugerencias
+                de estilo
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista: Agenda de Looks -->
+      <div class="view" id="calendar-view">
+        <div class="view-container">
+          <div class="view-header">
+            <h1><i class="fas fa-calendar-alt"></i> Agenda de Looks</h1>
+            <p>Planifica tus outfits para cada día de la semana</p>
+          </div>
+          <div class="view-content">
+            <div class="feature-placeholder">
+              <i class="fas fa-calendar-alt feature-icon"></i>
+              <h3>Próximamente</h3>
+              <p>
+                Organiza tus looks semanales y nunca más repitas outfits sin
+                querer
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista: Comunidad -->
+      <div class="view" id="community-view">
+        <div class="view-container">
+          <div class="view-header">
+            <h1><i class="fas fa-users"></i> Comunidad</h1>
+            <p>Conecta con otros usuarios y comparte tu estilo</p>
+          </div>
+          <div class="view-content">
+            <div class="feature-placeholder">
+              <i class="fas fa-users feature-icon"></i>
+              <h3>Próximamente</h3>
+              <p>
+                Comparte tus looks favoritos y descubre tendencias de la
+                comunidad
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vista: Configuración -->
+      <div class="view" id="settings-view">
+        <div class="view-container">
+          <div class="view-header">
+            <h1><i class="fas fa-cog"></i> Configuración</h1>
+            <p>Personaliza tu experiencia en MiraPe</p>
+          </div>
+          <div class="view-content">
+            <div class="feature-placeholder">
+              <i class="fas fa-cog feature-icon"></i>
+              <h3>Próximamente</h3>
+              <p>
+                Ajusta las preferencias de la aplicación según tus necesidades
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <script>
       const video = document.getElementById("video");
@@ -749,8 +1225,70 @@
       const avgConfidence = document.getElementById("avgConfidence");
       const analysisTime = document.getElementById("analysisTime");
 
+      // Variables para el menú de navegación
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      const hamburger = menuToggle.querySelector(".hamburger");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const views = document.querySelectorAll(".view");
+
       let stream = null;
       let startTime = null;
+
+      // Funciones para el menú de navegación
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+        sidebarOverlay.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+        hamburger.classList.remove("active");
+      }
+
+      function showView(viewId) {
+        // Ocultar todas las vistas
+        views.forEach((view) => view.classList.remove("active"));
+
+        // Mostrar la vista seleccionada
+        const targetView = document.getElementById(viewId + "-view");
+        if (targetView) {
+          targetView.classList.add("active");
+        }
+
+        // Actualizar el estado activo del menú
+        navLinks.forEach((link) => link.classList.remove("active"));
+        const activeLink = document.querySelector(`[data-view="${viewId}"]`);
+        if (activeLink) {
+          activeLink.classList.add("active");
+        }
+
+        // Cerrar sidebar en móvil
+        closeSidebar();
+      }
+
+      // Event listeners para el menú
+      menuToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+
+      // Event listeners para los enlaces de navegación
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const viewId = link.getAttribute("data-view");
+          showView(viewId);
+        });
+      });
+
+      // Cerrar sidebar con tecla Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeSidebar();
+        }
+      });
 
       const filteredItems = [
         "leg warmer",
