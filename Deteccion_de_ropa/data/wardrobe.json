@@ -97,5 +97,368 @@
     "color_name": "Azul",
     "img_path": "upload_images/1752959843_top, t-shirt, sweatshirt_0.jpg",
     "score": 0.7576492428779602
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      18,
+      30,
+      61
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752961394_pants_2.jpg",
+    "score": 0.9662318825721741
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      235,
+      43,
+      47
+    ],
+    "color_name": "Rojo",
+    "img_path": "upload_images/1752961394_top, t-shirt, sweatshirt_4.jpg",
+    "score": 0.9657996296882629
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      158,
+      155,
+      165
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961408_pants_3.jpg",
+    "score": 0.824180006980896
+  },
+  {
+    "tipo": "shirt, blouse",
+    "color_rgb": [
+      29,
+      43,
+      64
+    ],
+    "color_name": "Azul",
+    "img_path": "upload_images/1752961408_shirt, blouse_6.jpg",
+    "score": 0.725349485874176
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      214,
+      215,
+      224
+    ],
+    "color_name": "Gris claro",
+    "img_path": "upload_images/1752961552_dress_1.jpg",
+    "score": 0.9963297247886658
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      222,
+      216,
+      205
+    ],
+    "color_name": "Gris claro",
+    "img_path": "upload_images/1752961606_dress_2.jpg",
+    "score": 0.998369038105011
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      222,
+      216,
+      205
+    ],
+    "color_name": "Gris claro",
+    "img_path": "upload_images/1752961803_dress_2.jpg",
+    "score": 0.998369038105011
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      163,
+      126,
+      110
+    ],
+    "color_name": "Salm\u00f3n",
+    "img_path": "upload_images/1752961899_shoe_0.jpg",
+    "score": 0.9977529644966125
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      200,
+      190,
+      189
+    ],
+    "color_name": "Gris claro",
+    "img_path": "upload_images/1752961899_shoe_1.jpg",
+    "score": 0.9803333878517151
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      57,
+      98,
+      68
+    ],
+    "color_name": "Verde",
+    "img_path": "upload_images/1752961899_dress_3.jpg",
+    "score": 0.9907758831977844
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      237,
+      185,
+      127
+    ],
+    "color_name": "Salm\u00f3n",
+    "img_path": "upload_images/1752961935_top, t-shirt, sweatshirt_3.jpg",
+    "score": 0.7068048715591431
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      106,
+      133,
+      168
+    ],
+    "color_name": "Celeste",
+    "img_path": "upload_images/1752961935_pants_5.jpg",
+    "score": 0.9708442687988281
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      223,
+      221,
+      221
+    ],
+    "color_name": "Blanco",
+    "img_path": "upload_images/1752961954_top, t-shirt, sweatshirt_1.jpg",
+    "score": 0.9266374707221985
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      222,
+      219,
+      220
+    ],
+    "color_name": "Blanco",
+    "img_path": "upload_images/1752961954_top, t-shirt, sweatshirt_5.jpg",
+    "score": 0.7133560180664062
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      224,
+      222,
+      223
+    ],
+    "color_name": "Blanco",
+    "img_path": "upload_images/1752961954_top, t-shirt, sweatshirt_8.jpg",
+    "score": 0.5292937755584717
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      180,
+      176,
+      175
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752961954_pants_10.jpg",
+    "score": 0.9783753752708435
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      86,
+      90,
+      91
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752962076_jacket_7.jpg",
+    "score": 0.7927286624908447
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      96,
+      98,
+      96
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752962365_jacket_8.jpg",
+    "score": 0.7413972616195679
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      90,
+      89,
+      90
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752962448_jacket_6.jpg",
+    "score": 0.7654378414154053
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      123,
+      112,
+      103
+    ],
+    "color_name": "Rojizo",
+    "img_path": "upload_images/1752962759_jacket_4.jpg",
+    "score": 0.5317059755325317
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      92,
+      92,
+      92
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752962963_jacket_6.jpg",
+    "score": 0.7086607813835144
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      90,
+      89,
+      89
+    ],
+    "color_name": "Gris oscuro",
+    "img_path": "upload_images/1752963083_jacket_8.jpg",
+    "score": 0.8086025714874268
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963239_jacket_8.jpg",
+    "score": 0.7381237149238586
+  },
+  {
+    "tipo": "hood",
+    "color_rgb": [
+      140,
+      138,
+      138
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963265_hood_6.jpg",
+    "score": 0.508764922618866
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      104,
+      104,
+      105
+    ],
+    "color_name": "Gris",
+    "img_path": "upload_images/1752963265_jacket_8.jpg",
+    "score": 0.701880156993866
+  },
+  {
+    "tipo": "jacket",
+    "color_rgb": [
+      128,
+      128,
+      128
+    ],
+    "color_name": "Verde oliva",
+    "img_path": "upload_images/1752963403_jacket_6.jpg",
+    "score": 0.7132979035377502
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      222,
+      216,
+      205
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752963425_dress_2.jpg",
+    "score": 0.998369038105011
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      222,
+      216,
+      205
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752963429_dress_2.jpg",
+    "score": 0.998369038105011
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      163,
+      126,
+      110
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752963483_shoe_0.jpg",
+    "score": 0.9977529644966125
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      200,
+      190,
+      189
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752963483_shoe_1.jpg",
+    "score": 0.9803333878517151
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      39,
+      91,
+      47
+    ],
+    "color_name": "Verde oscuro",
+    "img_path": "upload_images/1752963483_dress_3.jpg",
+    "score": 0.9907758831977844
+  },
+  {
+    "tipo": "pants",
+    "color_rgb": [
+      18,
+      29,
+      70
+    ],
+    "color_name": "Azulado",
+    "img_path": "upload_images/1752963515_pants_2.jpg",
+    "score": 0.9662318825721741
+  },
+  {
+    "tipo": "top, t-shirt, sweatshirt",
+    "color_rgb": [
+      235,
+      44,
+      48
+    ],
+    "color_name": "Rojo",
+    "img_path": "upload_images/1752963515_top, t-shirt, sweatshirt_4.jpg",
+    "score": 0.9657996296882629
   }
 ]

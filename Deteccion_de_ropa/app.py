@@ -51,120 +51,179 @@ def is_filtered_item(item_type):
     return any(filtered.lower() in item_type.lower() for filtered in FILTERED_ITEMS)
 
 
+def test_color_detection():
+    """
+    Función para probar la detección de colores con ejemplos conocidos
+    """
+    test_colors = [
+        ([107, 142, 35], "Verde oliva clásico"),
+        ([85, 107, 47], "Verde oliva oscuro"),
+        ([128, 128, 0], "Verde oliva amarillento"),
+        ([90, 100, 85], "Verde oliva sutil"),
+        ([95, 105, 80], "Verde oliva militar"),
+        ([120, 130, 100], "Verde oliva claro"),
+        ([128, 128, 128], "Gris verdadero"),
+        ([100, 100, 100], "Gris medio"),
+        ([0, 128, 0], "Verde puro"),
+        ([50, 205, 50], "Verde lima"),
+        ([34, 139, 34], "Verde bosque"),
+    ]
+
+    print("=== PRUEBA DE DETECCIÓN DE COLORES ===")
+    for rgb, expected in test_colors:
+        detected = rgb_to_color_name(rgb)
+        print(f"RGB {rgb} -> Esperado: {expected}, Detectado: {detected}")
+    print("=====================================")
+
+
 def rgb_to_color_name(rgb):
     r, g, b = rgb
 
-    # Calcular brillo y saturación
+    # Función más directa basada en valores RGB reales
+    print(f"DEBUG - Analizando RGB: ({r}, {g}, {b})")
+
+    # Calcular valores para análisis
     max_val = max(r, g, b)
     min_val = min(r, g, b)
-    brightness = (max_val + min_val) / 2
+    diff = max_val - min_val
+    brightness = (r + g + b) / 3
 
-    # Colores grises/neutros
-    if max_val - min_val < 30:  # Muy poca diferencia entre canales
-        if brightness < 60:
+    # DETECCIÓN PRIORITARIA DE VERDES (ANTES QUE GRISES)
+    # Verde oliva y similares - MÁXIMA PRIORIDAD
+    if (
+        g >= r and g >= b and g > 60
+    ):  # Verde es mayor o igual, no necesariamente dominante
+        print(f"DEBUG - Detectando verde: g={g}, r={r}, b={b}")
+
+        # Verde oliva (componentes similares pero verde ligeramente mayor)
+        if abs(r - g) < 40 and abs(b - g) < 40 and r > 50 and b > 40:
+            return "Verde oliva"
+
+        # Verde puro (gran diferencia con otros canales)
+        elif r < 80 and b < 80:
+            if g > 180:
+                return "Verde brillante"
+            elif g > 140:
+                return "Verde"
+            else:
+                return "Verde oscuro"
+
+        # Verde con tonos marrones/tierra
+        elif r > 80 and b < 80:
+            return "Verde oliva"
+
+        # Verde con azul (aguamarina)
+        elif b > 100:
+            return "Verde agua"
+
+        # Verde general
+        else:
+            if g > 140:
+                return "Verde"
+            else:
+                return "Verde oscuro"
+
+    # Verde sutiles donde G no es dominante pero es claramente verde
+    elif g > r + 10 and g > b + 5 and g > 70:
+        return "Verde"
+
+    # Solo DESPUÉS de verificar verdes, verificar grises (para colores realmente neutros)
+    if diff < 12 and abs(r - g) < 8 and abs(g - b) < 8 and abs(r - b) < 8:
+        print(f"DEBUG - Color neutro detectado: diff={diff}")
+        if brightness < 40:
             return "Negro"
-        elif brightness < 120:
+        elif brightness < 80:
             return "Gris oscuro"
-        elif brightness < 180:
+        elif brightness < 140:
             return "Gris"
-        elif brightness < 220:
+        elif brightness < 200:
             return "Gris claro"
         else:
             return "Blanco"
 
-    # Colores dominantes
-    if r > g and r > b:  # Rojizo
-        if r > 200 and g < 100 and b < 100:
+    # ROJOS
+    if r > g and r > b and r > 100:
+        if g < 80 and b < 80:  # Rojo puro
             return "Rojo"
-        elif r > 160 and g > 120:
-            if b < 100:
+        elif g > 120:  # Con amarillo
+            if b < 80:
                 return "Naranja"
-            elif b > 130:  # Rosa más saturado
-                return "Rosa"
             else:
-                return "Salmón"
-        elif r > 100 and g > 80 and b < 80:
+                return "Rosa"
+        elif b > 120:  # Con azul
+            return "Magenta"
+        elif g > 60 and b < 60:  # Marrón
             return "Marrón"
         else:
             return "Rojizo"
 
-    elif g > r and g > b:  # Verdoso
-        if g > 200 and r < 100 and b < 100:
-            return "Verde"
-        elif r > 100:
-            return "Verde oliva"
-        else:
-            return "Verde"
-
-    elif b > r and b > g:  # Azulado
-        if b > 200 and r < 100 and g < 100:
+    # AZULES
+    elif b > r and b > g and b > 100:
+        if r < 80 and g < 80:  # Azul puro
             return "Azul"
-        elif b > 150 and g > 120 and r < 120:
-            return "Celeste"
-        elif g > 100:
-            return "Azul verdoso"
-        elif r > 100:
+        elif g > 120:  # Con verde
+            return "Turquesa"
+        elif r > 120:  # Con rojo
             return "Morado"
         else:
             return "Azul"
 
-    # Combinaciones especiales
-    elif r > 150 and g > 150 and b < 100:  # Amarillo
+    # AMARILLOS
+    elif r > 140 and g > 140 and b < 100:
         return "Amarillo"
-    elif r > 120 and g < 100 and b > 120:  # Morado
-        return "Morado"
-    elif r > 170 and g > 120 and b > 170:  # Rosa/magenta (más saturado)
-        return "Rosa"
-    elif r < 150 and g > 180 and b > 200:  # Celeste claro
-        return "Celeste"
-    elif r > 150 and g > 200 and b > 220:  # Azul muy claro/celeste
-        return "Celeste claro"
 
-    # Por defecto, usar el canal dominante
-    if max(rgb) == r:
+    # MORADOS
+    elif r > 120 and b > 120 and g < 100:
+        return "Morado"
+
+    # ROSAS
+    elif r > 180 and g > 120 and b > 120:
+        return "Rosa"
+
+    # Análisis final por canal dominante
+    if max_val == r and r > g + 15:
         return "Rojizo"
-    elif max(rgb) == g:
+    elif max_val == g and g > r + 15:
         return "Verdoso"
-    else:
+    elif max_val == b and b > r + 15:
         return "Azulado"
+
+    # Si todo falla
+    return f"Color indefinido (R:{r}, G:{g}, B:{b})"
 
 
 def enhance_color_by_garment_type(color_rgb, item_type):
     try:
-        # Convertir RGB a HSV para manipular mejor el color
-        rgb_normalized = np.array(color_rgb) / 255.0
-        hsv = colorsys.rgb_to_hsv(
-            rgb_normalized[0], rgb_normalized[1], rgb_normalized[2]
-        )
+        r, g, b = color_rgb
 
-        # Ajustes específicos por tipo de prenda
-        h, s, v = hsv
+        # Para prendas verdes, asegurar que el verde sea más prominente
+        if g > max(r, b) or (g >= r + 10 and g >= b + 5):
+            # Es verde, mejorarlo
+            if g < 140:  # Verde muy sutil
+                g = min(g * 1.2, 200)  # Intensificar el verde
+                r = max(r * 0.9, 0)  # Reducir ligeramente otros canales
+                b = max(b * 0.9, 0)
 
-        # Para camisas y polos, aumentar ligeramente la saturación si es muy baja
-        if item_type in ["shirt", "polo", "blouse", "top"]:
-            if s < 0.15:  # Color muy desaturado
-                s = min(s * 1.3, 0.4)  # Aumentar saturación moderadamente
+            # Para camisas verdes, hacer más vivido
+            if item_type in ["shirt", "polo", "blouse", "top"]:
+                g = min(g * 1.1, 220)
 
-        # Para jeans, ajustar hacia tonos azules si está en el rango
-        elif item_type in ["jeans", "pants"]:
-            # Si el color está en el rango azul pero muy desaturado
-            if 0.55 <= h <= 0.7 and s < 0.3:
-                s = min(s * 1.5, 0.6)
+        # Para jeans, intensificar azules
+        elif item_type in ["jeans", "pants"] and b > max(r, g):
+            b = min(b * 1.15, 200)
+            r = max(r * 0.95, 0)
+            g = max(g * 0.95, 0)
 
-        # Para prendas oscuras como chaquetas, evitar que se vean muy oscuras
+        # Para prendas oscuras, iluminar ligeramente
         elif item_type in ["jacket", "coat", "blazer"]:
-            if v < 0.2:  # Muy oscuro
-                v = min(v * 1.2, 0.4)
+            brightness = (r + g + b) / 3
+            if brightness < 80:  # Muy oscuro
+                factor = 1.3
+                r = min(r * factor, 160)
+                g = min(g * factor, 160)
+                b = min(b * factor, 160)
 
-        # Convertir de vuelta a RGB
-        enhanced_rgb = colorsys.hsv_to_rgb(h, s, v)
-        enhanced_color = [
-            int(enhanced_rgb[0] * 255),
-            int(enhanced_rgb[1] * 255),
-            int(enhanced_rgb[2] * 255),
-        ]
-
-        return enhanced_color
+        return [int(r), int(g), int(b)]
 
     except Exception as e:
         print(f"Error en enhance_color_by_garment_type: {e}")
@@ -268,6 +327,9 @@ def index():
 @app.route("/upload", methods=["POST"])
 def upload():
     try:
+        # Ejecutar prueba de colores al inicio (solo para debug)
+        test_color_detection()
+
         img = None
         timestamp = str(int(time.time()))
         original_image_path = None
