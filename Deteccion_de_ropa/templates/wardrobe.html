@@ -318,6 +318,47 @@
         box-shadow: 0 8px 25px rgba(125, 184, 232, 0.4);
       }
 
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .btn:disabled {
+        background: #ddd !important;
+        color: #999 !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #545b62);
+      }
+
+      .btn-secondary:hover {
+        background: linear-gradient(135deg, var(--gold-accent), #e6c068);
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #28a745, #20c997);
+      }
+
+      .btn-success:hover {
+        background: linear-gradient(135deg, var(--gold-accent), #e6c068);
+      }
+
+      .adjustment-controls {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        display: none;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        border: 1px solid var(--pastel-blue);
+      }
+
       .btn:disabled {
         background: #ccc;
         cursor: not-allowed;
@@ -576,61 +617,113 @@
 
       function setupCanvas() {
         canvas = document.getElementById("canvas");
-        ctx = canvas.getContext("2d");
+        if (canvas) {
+          ctx = canvas.getContext("2d");
+          console.log("Canvas configurado correctamente");
+        } else {
+          console.error("No se pudo encontrar el elemento canvas");
+        }
       }
 
       function setupButtons() {
-        document
-          .getElementById("clearCanvas")
-          .addEventListener("click", clearCanvas);
-        document
-          .getElementById("resetImage")
-          .addEventListener("click", resetImage);
+        console.log("Configurando botones...");
+        
+        const clearBtn = document.getElementById("clearCanvas");
+        const resetBtn = document.getElementById("resetImage");
+        const testBtn = document.getElementById("testCanvas");
+        const adjustBtn = document.getElementById("showAdjustments");
+        
+        console.log("Botones encontrados:", {
+          clearBtn: !!clearBtn,
+          resetBtn: !!resetBtn, 
+          testBtn: !!testBtn,
+          adjustBtn: !!adjustBtn
+        });
 
-        document
-          .getElementById("testCanvas")
-          .addEventListener("click", function () {
+        if (clearBtn) {
+          clearBtn.addEventListener("click", clearCanvas);
+          console.log("Event listener agregado a clearCanvas");
+        }
+        
+        if (resetBtn) {
+          resetBtn.addEventListener("click", resetImage);
+          console.log("Event listener agregado a resetImage");
+        }
+
+        if (testBtn) {
+          testBtn.addEventListener("click", function () {
             console.log("Probando canvas...");
-            ctx.fillStyle = "rgba(125, 184, 232, 0.5)";
-            ctx.fillRect(50, 50, 100, 100);
-            console.log("Rectángulo azul dibujado en canvas");
-          });
-
-        document
-          .getElementById("showAdjustments")
-          .addEventListener("click", function () {
-            const controls = document.getElementById("adjustmentControls");
-            if (controls.style.display === "flex") {
-              controls.style.display = "none";
-              this.innerHTML =
-                '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+            if (ctx && canvas) {
+              console.log("Canvas disponible, dimensiones:", canvas.width, "x", canvas.height);
+              ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+              ctx.fillRect(50, 50, 100, 100);
+              console.log("Rectángulo rojo dibujado en canvas");
+              
+              // Dibujar un círculo también para verificar
+              ctx.fillStyle = "rgba(0, 255, 0, 0.5)";
+              ctx.beginPath();
+              ctx.arc(200, 100, 30, 0, 2 * Math.PI);
+              ctx.fill();
+              console.log("Círculo verde dibujado en canvas");
             } else {
-              controls.style.display = "flex";
-              this.innerHTML =
-                '<i class="fas fa-eye-slash"></i> Ocultar Ajustes';
+              console.error("Canvas o contexto no disponible");
+              console.log("Canvas:", canvas);
+              console.log("Context:", ctx);
             }
           });
+          console.log("Event listener agregado a testCanvas");
+        }
 
-        document
-          .getElementById("scaleSlider")
-          .addEventListener("input", function (e) {
+        if (adjustBtn) {
+          adjustBtn.addEventListener("click", function () {
+            console.log("Botón de ajustes clickeado");
+            const controls = document.getElementById("adjustmentControls");
+            if (controls) {
+              if (controls.style.display === "flex") {
+                controls.style.display = "none";
+                this.innerHTML = '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+              } else {
+                controls.style.display = "flex";
+                this.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Ajustes';
+              }
+            } else {
+              console.error("No se encontró adjustmentControls");
+            }
+          });
+          console.log("Event listener agregado a showAdjustments");
+        }
+
+        // Configurar sliders de ajuste
+        const scaleSlider = document.getElementById("scaleSlider");
+        const xSlider = document.getElementById("xSlider");
+        const ySlider = document.getElementById("ySlider");
+
+        if (scaleSlider) {
+          scaleSlider.addEventListener("input", function (e) {
             adjustmentScale = parseFloat(e.target.value);
+            console.log("Scale ajustado a:", adjustmentScale);
             if (currentClothingImg) redrawClothing();
           });
+          console.log("Event listener agregado a scaleSlider");
+        }
 
-        document
-          .getElementById("xSlider")
-          .addEventListener("input", function (e) {
+        if (xSlider) {
+          xSlider.addEventListener("input", function (e) {
             adjustmentX = parseInt(e.target.value);
+            console.log("X ajustado a:", adjustmentX);
             if (currentClothingImg) redrawClothing();
           });
+          console.log("Event listener agregado a xSlider");
+        }
 
-        document
-          .getElementById("ySlider")
-          .addEventListener("input", function (e) {
+        if (ySlider) {
+          ySlider.addEventListener("input", function (e) {
             adjustmentY = parseInt(e.target.value);
+            console.log("Y ajustado a:", adjustmentY);
             if (currentClothingImg) redrawClothing();
           });
+          console.log("Event listener agregado a ySlider");
+        }
       }
 
       function handleFileSelect(event) {
@@ -645,58 +738,117 @@
       }
 
       function displayUserImage(imageSrc) {
-        const userImageContainer =
-          document.getElementById("userImageContainer");
+        console.log("displayUserImage() llamado");
+        const userImageContainer = document.getElementById("userImageContainer");
         const userImage = document.getElementById("userImage");
         const placeholder = document.getElementById("uploadPlaceholder");
 
+        if (!userImage || !userImageContainer || !placeholder) {
+          console.error("Elementos necesarios no encontrados para mostrar imagen");
+          return;
+        }
+
         userImage.src = imageSrc;
         userImage.onload = function () {
+          console.log("Imagen de usuario cargada exitosamente");
+          console.log("Dimensiones de la imagen:", userImage.naturalWidth, "x", userImage.naturalHeight);
           setupCanvasSize();
           userImageContainer.style.display = "inline-block";
           placeholder.style.display = "none";
           enableButtons();
         };
+        userImage.onerror = function() {
+          console.error("Error al cargar imagen de usuario");
+        };
       }
 
       function setupCanvasSize() {
         const userImage = document.getElementById("userImage");
-        console.log(
-          "setupCanvasSize - userImage dimensiones:",
-          userImage.clientWidth,
-          "x",
-          userImage.clientHeight
-        );
+        if (!userImage) {
+          console.error("No se encontró userImage para configurar canvas");
+          return;
+        }
+        
+        if (!canvas) {
+          console.error("Canvas no está disponible");
+          return;
+        }
 
-        canvas.width = userImage.clientWidth;
-        canvas.height = userImage.clientHeight;
-        canvas.style.width = userImage.clientWidth + "px";
-        canvas.style.height = userImage.clientHeight + "px";
+        // Esperar a que la imagen esté completamente renderizada
+        setTimeout(() => {
+          console.log(
+            "setupCanvasSize - userImage dimensiones:",
+            userImage.clientWidth,
+            "x",
+            userImage.clientHeight
+          );
 
-        console.log("Canvas configurado:", canvas.width, "x", canvas.height);
+          canvas.width = userImage.clientWidth;
+          canvas.height = userImage.clientHeight;
+          canvas.style.width = userImage.clientWidth + "px";
+          canvas.style.height = userImage.clientHeight + "px";
+
+          console.log("Canvas configurado:", canvas.width, "x", canvas.height);
+        }, 100);
       }
 
       function enableButtons() {
-        document.getElementById("clearCanvas").disabled = false;
-        document.getElementById("resetImage").disabled = false;
-        document.getElementById("testCanvas").disabled = false;
+        console.log("Habilitando botones...");
+        const clearBtn = document.getElementById("clearCanvas");
+        const resetBtn = document.getElementById("resetImage");
+        const testBtn = document.getElementById("testCanvas");
+        
+        if (clearBtn) {
+          clearBtn.disabled = false;
+          console.log("clearCanvas habilitado");
+        }
+        if (resetBtn) {
+          resetBtn.disabled = false;
+          console.log("resetImage habilitado");
+        }
+        if (testBtn) {
+          testBtn.disabled = false;
+          console.log("testCanvas habilitado");
+        }
       }
 
       function disableButtons() {
-        document.getElementById("clearCanvas").disabled = true;
-        document.getElementById("resetImage").disabled = true;
-        document.getElementById("testCanvas").disabled = true;
+        console.log("Deshabilitando botones...");
+        const clearBtn = document.getElementById("clearCanvas");
+        const resetBtn = document.getElementById("resetImage");
+        const testBtn = document.getElementById("testCanvas");
+        
+        if (clearBtn) clearBtn.disabled = true;
+        if (resetBtn) resetBtn.disabled = true;
+        if (testBtn) testBtn.disabled = true;
       }
 
       function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        console.log("clearCanvas() llamado");
+        if (ctx && canvas) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          console.log("Canvas limpiado");
+        } else {
+          console.error("Canvas o contexto no disponible para limpiar");
+        }
+        
         currentClothingImg = null;
-        document.getElementById("adjustmentControls").style.display = "none";
-        document.getElementById("showAdjustments").style.display = "none";
-        document.getElementById("showAdjustments").disabled = true;
-        document.getElementById("showAdjustments").innerHTML =
-          '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+        
+        const adjustmentControls = document.getElementById("adjustmentControls");
+        const showAdjustments = document.getElementById("showAdjustments");
+        
+        if (adjustmentControls) {
+          adjustmentControls.style.display = "none";
+        }
+        
+        if (showAdjustments) {
+          showAdjustments.style.display = "none";
+          showAdjustments.disabled = true;
+          showAdjustments.innerHTML = '<i class="fas fa-sliders-h"></i> Ajustar Posición';
+        }
+        
         resetAdjustmentControls();
+        console.log("Canvas y controles reiniciados");
       }
 
       function resetAdjustmentControls() {
@@ -715,16 +867,24 @@
       }
 
       function resetImage() {
-        const userImageContainer =
-          document.getElementById("userImageContainer");
+        console.log("resetImage() llamado");
+        const userImageContainer = document.getElementById("userImageContainer");
         const placeholder = document.getElementById("uploadPlaceholder");
         const fileInput = document.getElementById("fileInput");
 
-        userImageContainer.style.display = "none";
-        placeholder.style.display = "block";
-        fileInput.value = "";
+        if (userImageContainer) {
+          userImageContainer.style.display = "none";
+        }
+        if (placeholder) {
+          placeholder.style.display = "block";
+        }
+        if (fileInput) {
+          fileInput.value = "";
+        }
+        
         clearCanvas();
         disableButtons();
+        console.log("Imagen reiniciada");
       }
 
       async function loadClothingData() {
@@ -794,38 +954,85 @@
       }
 
       function applyClothing(item) {
-        console.log("applyClothing llamado con:", item);
+        console.log("🎯 applyClothing llamado con:", item);
 
         const userImage = document.getElementById("userImage");
+        const userImageContainer = document.getElementById("userImageContainer");
+        
+        console.log("userImage encontrado:", userImage);
+        console.log("userImageContainer encontrado:", userImageContainer);
+        console.log("userImage.src:", userImage?.src);
+        console.log("userImageContainer.style.display:", userImageContainer?.style.display);
 
-        if (!userImage.src || userImage.style.display === "none") {
+        if (!userImage || !userImage.src || userImageContainer?.style.display === "none") {
           alert("Por favor, sube una imagen primero");
+          return;
+        }
+
+        if (!canvas || !ctx) {
+          console.error("Canvas o contexto no disponible");
+          alert("Error: Canvas no disponible");
           return;
         }
 
         currentClothingType = item.tipo;
         resetAdjustmentControls();
 
+        console.log("🔄 Intentando cargar imagen:", item.img_path);
+
         const clothingImg = new Image();
         clothingImg.crossOrigin = "anonymous";
+        
         clothingImg.onload = function () {
-          console.log("Imagen de ropa cargada exitosamente");
+          console.log("✅ Imagen de ropa cargada exitosamente");
+          console.log("Dimensiones:", clothingImg.width, "x", clothingImg.height);
           currentClothingImg = clothingImg;
-          drawClothingOnCanvas(clothingImg);
-          document.getElementById("showAdjustments").style.display =
-            "inline-block";
-          document.getElementById("showAdjustments").disabled = false;
+          
+          // Verificar que el canvas tenga dimensiones válidas
+          if (canvas.width === 0 || canvas.height === 0) {
+            console.log("⚠️ Canvas sin dimensiones, reconfigurando...");
+            setupCanvasSize();
+            // Intentar dibujar después de un pequeño delay
+            setTimeout(() => {
+              drawClothingOnCanvas(clothingImg);
+            }, 200);
+          } else {
+            drawClothingOnCanvas(clothingImg);
+          }
+          
+          const adjustBtn = document.getElementById("showAdjustments");
+          if (adjustBtn) {
+            adjustBtn.style.display = "inline-block";
+            adjustBtn.disabled = false;
+          }
         };
+        
         clothingImg.onerror = function () {
-          console.error("Error loading clothing image:", item.img_path);
+          console.error("❌ Error loading clothing image:", item.img_path);
           alert("Error al cargar la imagen de la prenda");
         };
+        
         const imagePath = item.img_path.replace("upload_images/", "");
+        console.log("🔗 Ruta final de imagen:", `/upload_images/${imagePath}`);
         clothingImg.src = `/upload_images/${imagePath}`;
       }
 
       function drawClothingOnCanvas(clothingImg) {
         console.log("drawClothingOnCanvas llamado");
+        console.log("Canvas:", canvas);
+        console.log("Context:", ctx);
+        console.log("Canvas dimensiones:", canvas.width, "x", canvas.height);
+        console.log("Imagen de ropa dimensiones:", clothingImg.width, "x", clothingImg.height);
+
+        if (!canvas || !ctx) {
+          console.error("Canvas o contexto no disponible");
+          return;
+        }
+
+        if (canvas.width === 0 || canvas.height === 0) {
+          console.error("Canvas no tiene dimensiones válidas");
+          return;
+        }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -835,25 +1042,19 @@
         let scaledWidth, scaledHeight, x, y;
 
         const clothingType = currentClothingType.toLowerCase();
+        console.log("Tipo de prenda:", clothingType);
 
-        // Posicionamiento inteligente basado en tipo de prenda
-        if (
-          clothingType.includes("glasses") ||
-          clothingType.includes("sunglasses")
-        ) {
+        // Posicionamiento inteligente basado en tipo de prenda (igual que en Mariel)
+        if (clothingType.includes("glasses")) {
           scaledWidth = canvasWidth * 0.3;
           scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
           x = (canvasWidth - scaledWidth) / 2;
           y = canvasHeight * 0.15;
-        } else if (
-          clothingType.includes("hat") ||
-          clothingType.includes("cap") ||
-          clothingType.includes("hood")
-        ) {
-          scaledWidth = canvasWidth * 0.6;
+        } else if (clothingType.includes("hood")) {
+          scaledWidth = canvasWidth * 0.7;
           scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
           x = (canvasWidth - scaledWidth) / 2;
-          y = canvasHeight * 0.02;
+          y = canvasHeight * 0.05;
         } else if (
           clothingType.includes("jacket") ||
           clothingType.includes("shirt") ||
@@ -862,10 +1063,28 @@
           clothingType.includes("t-shirt") ||
           clothingType.includes("sweatshirt")
         ) {
-          scaledWidth = canvasWidth * 0.7;
+          scaledWidth = canvasWidth * 0.8;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.2;
+        } else if (clothingType.includes("tie")) {
+          scaledWidth = canvasWidth * 0.15;
           scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
           x = (canvasWidth - scaledWidth) / 2;
           y = canvasHeight * 0.25;
+        } else if (clothingType.includes("collar")) {
+          scaledWidth = canvasWidth * 0.4;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = (canvasWidth - scaledWidth) / 2;
+          y = canvasHeight * 0.22;
+        } else if (
+          clothingType.includes("bag") ||
+          clothingType.includes("wallet")
+        ) {
+          scaledWidth = canvasWidth * 0.3;
+          scaledHeight = (clothingImg.height / clothingImg.width) * scaledWidth;
+          x = canvasWidth * 0.1;
+          y = canvasHeight * 0.4;
         } else if (
           clothingType.includes("pants") ||
           clothingType.includes("jeans") ||
@@ -902,8 +1121,15 @@
         x += adjustmentX;
         y += adjustmentY;
 
-        ctx.drawImage(clothingImg, x, y, scaledWidth, scaledHeight);
-        console.log("Imagen dibujada en canvas");
+        console.log("Posición final:", { x, y, scaledWidth, scaledHeight });
+        console.log("Ajustes:", { adjustmentScale, adjustmentX, adjustmentY });
+
+        try {
+          ctx.drawImage(clothingImg, x, y, scaledWidth, scaledHeight);
+          console.log("✅ Imagen dibujada en canvas exitosamente");
+        } catch (error) {
+          console.error("❌ Error al dibujar imagen en canvas:", error);
+        }
       }
 
       window.addEventListener("resize", function () {
