@@ -526,5 +526,38 @@
     "color_name": "Negro",
     "img_path": "upload_images/1752969106_pants_5.jpg",
     "score": 0.9705595374107361
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      163,
+      126,
+      110
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752970404_shoe_0.jpg",
+    "score": 0.9977529644966125
+  },
+  {
+    "tipo": "shoe",
+    "color_rgb": [
+      200,
+      190,
+      189
+    ],
+    "color_name": "Rosa",
+    "img_path": "upload_images/1752970404_shoe_1.jpg",
+    "score": 0.9803333878517151
+  },
+  {
+    "tipo": "dress",
+    "color_rgb": [
+      39,
+      91,
+      47
+    ],
+    "color_name": "Verde oscuro",
+    "img_path": "upload_images/1752970404_dress_3.jpg",
+    "score": 0.9907758831977844
   }
 ]

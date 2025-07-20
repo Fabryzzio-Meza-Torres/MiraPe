@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda de Looks - MiraPe</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --cream: #faf7f2;
+        --pastel-blue: #e6f3ff;
+        --light-blue: #b8e6ff;
+        --pale-gold: #e8d5b7;
+        --gold-accent: #d4af37;
+        --text-dark: #2c2c2c;
+        --text-medium: #5a5a5a;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --blue-accent: #7db8e8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--cream) 0%,
+          var(--pastel-blue) 50%,
+          var(--light-blue) 100%
+        );
+        min-height: 100vh;
+        color: var(--text-dark);
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        min-height: 100vh;
+      }
+
+      .panel {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 60px var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--pale-gold),
+          var(--gold-accent),
+          var(--pale-gold)
+        );
+      }
+
+      .weather-widget {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 20px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px var(--shadow);
+        z-index: 1000;
+        min-width: 200px;
+      }
+
+      .weather-time {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+      }
+
+      .weather-info {
+        color: var(--text-medium);
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 300;
+        color: var(--text-dark);
+        margin-bottom: 30px;
+        text-align: center;
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid var(--pastel-blue);
+        border-radius: 12px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: white;
+        color: var(--text-dark);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--blue-accent);
+        box-shadow: 0 0 0 3px rgba(125, 184, 232, 0.1);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px var(--shadow);
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--pale-gold),
+          var(--gold-accent)
+        );
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+      }
+
+      .btn-back {
+        background: linear-gradient(
+          135deg,
+          var(--pastel-blue),
+          var(--blue-accent)
+        );
+        color: white;
+        margin-bottom: 20px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(125, 184, 232, 0.3);
+        text-decoration: none;
+        color: white;
+      }
+
+      .outfit-suggestion {
+        background: linear-gradient(135deg, #e8f5e8, #d4edda);
+        border: 2px solid #c3e6cb;
+        border-radius: 16px;
+        padding: 20px;
+        margin: 20px 0;
+        font-weight: 500;
+        color: #155724;
+      }
+
+      .events-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .event-item {
+        background: var(--cream);
+        border: 2px solid var(--pastel-blue);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .event-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px var(--shadow);
+      }
+
+      .event-date {
+        font-weight: 600;
+        color: var(--blue-accent);
+        margin-bottom: 5px;
+      }
+
+      .event-title {
+        font-weight: 500;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+      }
+
+      .event-desc {
+        color: var(--text-medium);
+        font-size: 14px;
+      }
+
+      .loading {
+        text-align: center;
+        color: var(--text-medium);
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          grid-template-columns: 1fr;
+          padding: 10px;
+        }
+
+        .weather-widget {
+          position: relative;
+          top: auto;
+          right: auto;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Widget del clima -->
+    <div class="weather-widget">
+      <div class="weather-time" id="hora">--:--:--</div>
+      <div class="weather-info">
+        Clima: <span id="clima">Cargando...</span> (<span id="temp">--</span>°C)
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Panel izquierdo: Crear evento -->
+      <div class="panel">
+        <a href="/" class="btn btn-back">
+          <i class="fas fa-arrow-left"></i>
+          Volver al Espejo
+        </a>
+
+        <h1>
+          <i class="fas fa-calendar-plus"></i>
+          Agenda de Looks
+        </h1>
+
+        <form id="form-evento">
+          <div class="form-group">
+            <label for="titulo">
+              <i class="fas fa-tag"></i>
+              Título del evento
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="titulo"
+              placeholder="Ej: Reunión de trabajo, Cena romántica..."
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="fecha">
+              <i class="fas fa-calendar"></i>
+              Fecha
+            </label>
+            <input type="date" class="form-control" id="fecha" required />
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">
+              <i class="fas fa-edit"></i>
+              Descripción del evento
+            </label>
+            <textarea
+              class="form-control"
+              id="descripcion"
+              placeholder="Describe el tipo de evento, ambiente, dress code..."
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <button class="btn btn-primary" type="submit">
+            <i class="fas fa-save"></i>
+            Guardar Evento
+          </button>
+        </form>
+
+        <div id="outfit-container" style="display: none">
+          <h2>
+            <i class="fas fa-magic"></i>
+            Sugerencia de Outfit
+          </h2>
+          <div class="outfit-suggestion" id="outfit">
+            <!-- Aquí aparecerá la sugerencia -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel derecho: Lista de eventos -->
+      <div class="panel">
+        <h2>
+          <i class="fas fa-list"></i>
+          Eventos Agendados
+        </h2>
+
+        <ul id="lista-eventos" class="events-list">
+          <li class="loading">Cargando eventos...</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("form-evento");
+      const lista = document.getElementById("lista-eventos");
+      const climaEl = document.getElementById("clima");
+      const tempEl = document.getElementById("temp");
+      const horaEl = document.getElementById("hora");
+      const outfitEl = document.getElementById("outfit");
+      const outfitContainer = document.getElementById("outfit-container");
+
+      async function obtenerEventos() {
+        try {
+          const res = await fetch("/agenda-eventos");
+          const eventos = await res.json();
+          lista.innerHTML = "";
+
+          if (eventos.length === 0) {
+            lista.innerHTML =
+              '<li class="loading">No hay eventos agendados</li>';
+            return;
+          }
+
+          eventos.forEach((e) => {
+            const item = document.createElement("li");
+            item.className = "event-item";
+            item.innerHTML = `
+              <div class="event-date">
+                <i class="fas fa-calendar-day"></i>
+                ${e.fecha}
+              </div>
+              <div class="event-title">${e.titulo}</div>
+              <div class="event-desc">${e.descripcion}</div>
+            `;
+            lista.appendChild(item);
+          });
+        } catch (error) {
+          lista.innerHTML = '<li class="loading">Error al cargar eventos</li>';
+          console.error("Error:", error);
+        }
+      }
+
+      async function obtenerClima() {
+        try {
+          const res = await fetch("/agenda-clima");
+          const data = await res.json();
+          climaEl.textContent = data.desc;
+          tempEl.textContent = data.temp;
+        } catch (error) {
+          climaEl.textContent = "No disponible";
+          tempEl.textContent = "--";
+          console.error("Error clima:", error);
+        }
+      }
+
+      function mostrarHora() {
+        const ahora = new Date();
+        const hora = ahora.toLocaleTimeString("es-PE");
+        horaEl.textContent = hora;
+      }
+
+      // Inicializar
+      setInterval(mostrarHora, 1000);
+      mostrarHora();
+      obtenerClima();
+      obtenerEventos();
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const titulo = document.getElementById("titulo").value;
+        const fecha = document.getElementById("fecha").value;
+        const descripcion = document.getElementById("descripcion").value;
+
+        try {
+          // Guardar evento
+          await fetch("/agenda-agregar-evento", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ titulo, fecha, descripcion }),
+          });
+
+          // Obtener recomendación de outfit
+          const res = await fetch("/agenda-recomendar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ descripcion }),
+          });
+          const data = await res.json();
+
+          // Mostrar sugerencia
+          outfitEl.textContent = data.recomendacion;
+          outfitContainer.style.display = "block";
+
+          // Actualizar lista y limpiar formulario
+          obtenerEventos();
+          form.reset();
+        } catch (error) {
+          alert("Error al guardar el evento");
+          console.error("Error:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -330,6 +330,12 @@ def wardrobe_view():
     return render_template("wardrobe.html")
 
 
+@app.route("/agenda-view")
+def agenda_view():
+    """Ruta para mostrar la agenda de looks"""
+    return render_template("agenda.html")
+
+
 @app.route("/wardrobe-test")
 def wardrobe_test():
     """Ruta de prueba para el armario virtual"""
@@ -611,6 +617,127 @@ def get_wardrobe():
             wardrobe_data = json.load(f)
         return jsonify(wardrobe_data)
     return jsonify([])
+
+
+# ===================== RUTAS PARA AGENDA DE LOOKS =====================
+
+# Lista de eventos (simulando base de datos en memoria)
+agenda_eventos = []
+
+# Importar funciones necesarias para la agenda
+import requests
+from transformers import CLIPProcessor, CLIPModel
+import torch
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Configuración para agenda
+WEATHER_API_KEY = "53c0cdba3f617d813f3043fa38c3225c"
+
+# Cargar modelo CLIP (solo si no está cargado)
+try:
+    clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+    clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+except:
+    clip_model = None
+    clip_processor = None
+    print("⚠️ No se pudo cargar el modelo CLIP para recomendaciones")
+
+
+def load_wardrobe_for_agenda():
+    """Cargar prendas del armario para la agenda"""
+    try:
+        # Intentar cargar el archivo actualizado primero
+        try:
+            with open("data/wardrobe_updated.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            # Si no existe, usar el original
+            with open("data/wardrobe.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+    except:
+        return []
+
+
+def sugerir_outfit_agenda(descripcion):
+    """Sugerencia de outfit según descripción usando CLIP"""
+    if not clip_model or not clip_processor:
+        return "Sistema de recomendaciones no disponible"
+
+    wardrobe = load_wardrobe_for_agenda()
+    if not wardrobe:
+        return "No se encontraron prendas en el guardarropa"
+
+    try:
+        textos = [descripcion] + [
+            f"{item['tipo']} en color {item['color_name']}" for item in wardrobe
+        ]
+        inputs = clip_processor(text=textos, return_tensors="pt", padding=True)
+        with torch.no_grad():
+            embeddings = clip_model.get_text_features(**inputs)
+
+        query_vec = embeddings[0].unsqueeze(0)
+        item_vecs = embeddings[1:]
+        similarities = cosine_similarity(query_vec.numpy(), item_vecs.numpy())[0]
+
+        top_indices = similarities.argsort()[-2:][::-1]
+        selected_items = [wardrobe[i] for i in top_indices]
+
+        if len(selected_items) > 1:
+            return f"Te sugiero combinar {selected_items[0]['tipo']} en color {selected_items[0]['color_name']} con {selected_items[1]['tipo']} en color {selected_items[1]['color_name']}"
+        else:
+            return f"Te sugiero usar {selected_items[0]['tipo']} en color {selected_items[0]['color_name']}"
+    except Exception as e:
+        return f"Error al generar recomendación: {str(e)}"
+
+
+def get_weather_agenda(ciudad="Lima"):
+    """Función clima con OpenWeatherMap"""
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={WEATHER_API_KEY}&units=metric"
+    try:
+        r = requests.get(url)
+        data = r.json()
+        return {
+            "temp": data["main"]["temp"],
+            "desc": data["weather"][0]["description"],
+            "icon": data["weather"][0]["icon"],
+        }
+    except:
+        return {"temp": "?", "desc": "No disponible", "icon": "01d"}
+
+
+@app.route("/agenda-eventos")
+def obtener_eventos_agenda():
+    """Listar eventos de la agenda"""
+    return jsonify(agenda_eventos)
+
+
+@app.route("/agenda-agregar-evento", methods=["POST"])
+def agregar_evento_agenda():
+    """Guardar eventos en la agenda"""
+    data = request.get_json()
+    evento = {
+        "titulo": data["titulo"],
+        "fecha": data["fecha"],
+        "descripcion": data["descripcion"],
+    }
+    agenda_eventos.append(evento)
+    return jsonify({"status": "ok", "evento": evento})
+
+
+@app.route("/agenda-clima")
+def clima_agenda():
+    """Obtener clima para la agenda"""
+    ciudad = request.args.get("ciudad", "Lima")
+    return jsonify(get_weather_agenda(ciudad))
+
+
+@app.route("/agenda-recomendar", methods=["POST"])
+def recomendar_agenda():
+    """Obtener sugerencia de outfit para la agenda"""
+    data = request.get_json()
+    descripcion = data.get("descripcion", "")
+    recomendacion = sugerir_outfit_agenda(descripcion)
+    return jsonify({"recomendacion": recomendacion})
 
 
 if __name__ == "__main__":
