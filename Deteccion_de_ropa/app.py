@@ -336,6 +336,12 @@ def agenda_view():
     return render_template("agenda.html")
 
 
+@app.route("/combinaciones-view")
+def combinaciones_view():
+    """Ruta para mostrar las combinaciones de ropa"""
+    return render_template("combinaciones.html")
+
+
 @app.route("/wardrobe-test")
 def wardrobe_test():
     """Ruta de prueba para el armario virtual"""
@@ -738,6 +744,164 @@ def recomendar_agenda():
     descripcion = data.get("descripcion", "")
     recomendacion = sugerir_outfit_agenda(descripcion)
     return jsonify({"recomendacion": recomendacion})
+
+
+# ===================== RUTAS PARA COMBINACIONES =====================
+
+
+def generar_combinaciones():
+    """Genera combinaciones automáticas de ropa"""
+    try:
+        # Cargar datos del armario
+        try:
+            with open("data/wardrobe_updated.json", "r", encoding="utf-8") as f:
+                wardrobe = json.load(f)
+        except FileNotFoundError:
+            with open("data/wardrobe.json", "r", encoding="utf-8") as f:
+                wardrobe = json.load(f)
+
+        if not wardrobe:
+            return []
+
+        # Separar por categorías
+        tops = [
+            item
+            for item in wardrobe
+            if any(
+                tipo in item["tipo"].lower()
+                for tipo in ["shirt", "blouse", "top", "t-shirt", "sweatshirt"]
+            )
+        ]
+        bottoms = [
+            item
+            for item in wardrobe
+            if any(tipo in item["tipo"].lower() for tipo in ["pants", "jeans", "skirt"])
+        ]
+        dresses = [item for item in wardrobe if "dress" in item["tipo"].lower()]
+        outerwear = [
+            item
+            for item in wardrobe
+            if any(
+                tipo in item["tipo"].lower()
+                for tipo in ["jacket", "coat", "blazer", "cardigan"]
+            )
+        ]
+        accessories = [
+            item
+            for item in wardrobe
+            if any(
+                tipo in item["tipo"].lower()
+                for tipo in ["glasses", "hat", "bag", "belt", "tie"]
+            )
+        ]
+
+        combinaciones = []
+
+        # Tipo 1: Combinaciones con vestidos
+        for dress in dresses:
+            combo = {
+                "id": len(combinaciones) + 1,
+                "nombre": f"Look con {dress['color_name']}",
+                "tipo": "vestido",
+                "ocasion": "elegante",
+                "prendas": [dress],
+                "puntuacion": 85 + (len(combinaciones) % 15),  # Variación en puntuación
+            }
+
+            # Agregar chaqueta si hay
+            if outerwear:
+                jacket = outerwear[len(combinaciones) % len(outerwear)]
+                combo["prendas"].append(jacket)
+                combo["nombre"] = (
+                    f"Look {dress['color_name']} con {jacket['color_name']}"
+                )
+
+            # Agregar accesorio ocasionalmente
+            if accessories and len(combinaciones) % 3 == 0:
+                acc = accessories[len(combinaciones) % len(accessories)]
+                combo["prendas"].append(acc)
+
+            combinaciones.append(combo)
+
+        # Tipo 2: Combinaciones top + bottom
+        for i, top in enumerate(tops):
+            for j, bottom in enumerate(bottoms):
+                if len(combinaciones) >= 20:  # Limitar a 20 combinaciones
+                    break
+
+                # Lógica básica de combinación de colores
+                combo_score = 70
+                ocasion = "casual"
+
+                # Mejorar puntuación si los colores combinan bien
+                if top["color_name"].lower() in ["blanco", "negro", "gris"] or bottom[
+                    "color_name"
+                ].lower() in ["blanco", "negro", "gris"]:
+                    combo_score += 15
+                    ocasion = "versátil"
+
+                # Combinaciones específicas
+                if (
+                    "azul" in top["color_name"].lower()
+                    and "negro" in bottom["color_name"].lower()
+                ) or (
+                    "negro" in top["color_name"].lower()
+                    and "azul" in bottom["color_name"].lower()
+                ):
+                    combo_score += 10
+                    ocasion = "profesional"
+
+                combo = {
+                    "id": len(combinaciones) + 1,
+                    "nombre": f"Combo {top['color_name']} & {bottom['color_name']}",
+                    "tipo": "combinacion",
+                    "ocasion": ocasion,
+                    "prendas": [top, bottom],
+                    "puntuacion": combo_score + (i + j) % 20,
+                }
+
+                # Agregar chaqueta para algunas combinaciones
+                if outerwear and (i + j) % 4 == 0:
+                    jacket = outerwear[(i + j) % len(outerwear)]
+                    combo["prendas"].append(jacket)
+                    combo["puntuacion"] += 5
+                    combo["ocasion"] = "formal"
+
+                # Agregar accesorio
+                if accessories and (i + j) % 5 == 0:
+                    acc = accessories[(i + j) % len(accessories)]
+                    combo["prendas"].append(acc)
+                    combo["puntuacion"] += 3
+
+                combinaciones.append(combo)
+
+        # Ordenar por puntuación
+        combinaciones.sort(key=lambda x: x["puntuacion"], reverse=True)
+
+        return combinaciones[:15]  # Devolver top 15
+
+    except Exception as e:
+        print(f"Error generando combinaciones: {e}")
+        return []
+
+
+@app.route("/combinaciones-data")
+def get_combinaciones_data():
+    """API para obtener combinaciones generadas"""
+    combinaciones = generar_combinaciones()
+    return jsonify(combinaciones)
+
+
+@app.route("/combinacion-detalle/<int:combo_id>")
+def get_combinacion_detalle(combo_id):
+    """API para obtener detalles de una combinación específica"""
+    combinaciones = generar_combinaciones()
+    combo = next((c for c in combinaciones if c["id"] == combo_id), None)
+
+    if combo:
+        return jsonify(combo)
+    else:
+        return jsonify({"error": "Combinación no encontrada"}), 404
 
 
 if __name__ == "__main__":
