@@ -438,6 +438,70 @@ def get_weather(ciudad="Lima"):
     except:
         return {"temp": "?", "desc": "No disponible", "icon": "01d"}
 
+    COMMUNITY_DB = "data/community.json"
+
+
+USERS_DB = "data/users.json"
+
+
+def init_community_db():
+    """Inicializar archivos de base de datos si no existen"""
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
+    if not os.path.exists(COMMUNITY_DB):
+        with open(COMMUNITY_DB, "w") as f:
+            json.dump({"posts": [], "likes": [], "comments": []}, f)
+
+    if not os.path.exists(USERS_DB):
+        with open(USERS_DB, "w") as f:
+            json.dump({"users": []}, f)
+
+
+@app.route("/community-view")
+def community_view():
+    """Renderizar vista de comunidad"""
+    return render_template("community.html")
+
+
+COMMUNITY_DB = "data/community.json"
+USERS_DB = "data/users.json"
+
+
+@app.route("/api/community/posts", methods=["GET"])
+def get_posts():
+    """Obtener todos los posts"""
+    try:
+        with open(COMMUNITY_DB, "r") as f:
+            data = json.load(f)
+        return jsonify(data["posts"])
+    except:
+        return jsonify([])
+
+
+@app.route("/api/community/post", methods=["POST"])
+def create_post():
+    """Crear nuevo post"""
+    try:
+        data = request.json
+        with open(COMMUNITY_DB, "r+") as f:
+            db = json.load(f)
+            new_post = {
+                "id": len(db["posts"]) + 1,
+                "user_id": data.get("user_id", "anonymous"),
+                "image": data["image"],
+                "description": data["description"],
+                "timestamp": time.time(),
+                "likes": 0,
+                "comments": [],
+            }
+            db["posts"].append(new_post)
+            f.seek(0)
+            json.dump(db, f)
+        return jsonify(new_post)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

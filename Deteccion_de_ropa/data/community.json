@@ -1,0 +1,135 @@
+{
+  "posts": [
+    {
+      "id": "post1",
+      "user_id": "user1",
+      "image": "https://picsum.photos/400/500?random=1",
+      "description": "Mi outfit favorito para primavera 🌸 Combiné tonos pasteles para un look fresco y elegante. ¿Qué opinan?",
+      "tags": ["spring", "casual", "pastel", "elegante"],
+      "ocasion": "casual",
+      "weather": "templado",
+      "timestamp": "2025-07-19T10:30:00Z",
+      "likes": 24,
+      "comments": [
+        {
+          "id": "comment1",
+          "user_id": "user2",
+          "content": "¡Me encanta esta combinación! Los colores son perfectos.",
+          "timestamp": "2025-07-19T11:15:00Z"
+        },
+        {
+          "id": "comment2",
+          "user_id": "user3",
+          "content": "Súper elegante, Ana! ¿Dónde compraste esa blusa?",
+          "timestamp": "2025-07-19T12:00:00Z"
+        }
+      ],
+      "saved_by": ["user2", "user3"]
+    },
+    {
+      "id": "post2",
+      "user_id": "user2",
+      "image": "https://picsum.photos/400/500?random=2",
+      "description": "Street style vibes para el fin de semana 🔥 Nada como un buen look urbano para salir con amigos.",
+      "tags": ["street", "urban", "weekend", "cool"],
+      "ocasion": "casual",
+      "weather": "fresco",
+      "timestamp": "2025-07-19T08:45:00Z",
+      "likes": 31,
+      "comments": [
+        {
+          "id": "comment3",
+          "user_id": "user1",
+          "content": "¡Qué estilo! Me inspiras para probar algo más urbano.",
+          "timestamp": "2025-07-19T09:30:00Z"
+        }
+      ],
+      "saved_by": ["user1", "user4"]
+    },
+    {
+      "id": "post3",
+      "user_id": "user3",
+      "image": "https://picsum.photos/400/500?random=3",
+      "description": "Outfit sostenible del día 🌱 Cada prenda cuenta una historia de moda consciente. Vintage + eco-friendly = perfección.",
+      "tags": ["sustainable", "eco", "boho", "vintage"],
+      "ocasion": "dia",
+      "weather": "soleado",
+      "timestamp": "2025-07-19T14:20:00Z",
+      "likes": 19,
+      "comments": [
+        {
+          "id": "comment4",
+          "user_id": "user4",
+          "content": "¡Amo la moda sostenible! ¿Tienes alguna tienda recomendada?",
+          "timestamp": "2025-07-19T15:00:00Z"
+        },
+        {
+          "id": "comment5",
+          "user_id": "user1",
+          "content": "Hermoso look, María. Me encanta tu enfoque consciente.",
+          "timestamp": "2025-07-19T15:30:00Z"
+        }
+      ],
+      "saved_by": ["user1", "user2", "user5"]
+    },
+    {
+      "id": "post4",
+      "user_id": "user4",
+      "image": "https://picsum.photos/400/500?random=4",
+      "description": "Ready for tonight's party! ✨ Brillos, glamour y mucha actitud. Sometimes you just need to shine! 💫",
+      "tags": ["party", "glamour", "night", "sequins", "glitter"],
+      "ocasion": "noche",
+      "weather": "templado",
+      "timestamp": "2025-07-19T18:00:00Z",
+      "likes": 42,
+      "comments": [
+        {
+          "id": "comment6",
+          "user_id": "user2",
+          "content": "¡WOW! Estás increíble, Sofía. Ese vestido es perfecto.",
+          "timestamp": "2025-07-19T18:15:00Z"
+        },
+        {
+          "id": "comment7",
+          "user_id": "user5",
+          "content": "Definitivamente sabes cómo brillar! 🌟",
+          "timestamp": "2025-07-19T19:00:00Z"
+        }
+      ],
+      "saved_by": ["user1", "user2", "user3"]
+    },
+    {
+      "id": "post5",
+      "user_id": "user5",
+      "image": "https://picsum.photos/400/500?random=5",
+      "description": "Classic menswear never goes out of style 👔 Blazer navy, camisa blanca y pantalón gris. Elegancia atemporal.",
+      "tags": ["classic", "formal", "menswear", "timeless", "navy"],
+      "ocasion": "trabajo",
+      "weather": "templado",
+      "timestamp": "2025-07-19T07:30:00Z",
+      "likes": 15,
+      "comments": [
+        {
+          "id": "comment8",
+          "user_id": "user1",
+          "content": "Impecable como siempre, Diego. El corte del blazer es perfecto.",
+          "timestamp": "2025-07-19T08:00:00Z"
+        }
+      ],
+      "saved_by": ["user4"]
+    },
+    {
+      "id": "post6",
+      "user_id": "user1",
+      "image": "https://picsum.photos/400/500?random=6",
+      "description": "Business casual perfection ✨ Cuando necesitas verte profesional pero cómoda. La clave está en los detalles.",
+      "tags": ["business", "professional", "comfortable", "details"],
+      "ocasion": "trabajo",
+      "weather": "templado",
+      "timestamp": "2025-07-18T09:00:00Z",
+      "likes": 28,
+      "comments": [],
+      "saved_by": ["user2", "user5"]
+    }
+  ]
+}

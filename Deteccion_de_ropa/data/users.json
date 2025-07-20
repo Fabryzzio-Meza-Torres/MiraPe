@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "username": "ana.garcia",
+      "name": "Ana García",
+      "avatar": "https://i.pravatar.cc/150?img=1",
+      "bio": "Fashion enthusiast | Personal Stylist",
+      "style_preferences": ["minimalist", "business casual", "elegant"],
+      "color_preferences": ["neutral", "pastel", "earth tones"],
+      "followers": ["user2", "user3"],
+      "following": ["user2"],
+      "verified": true
+    },
+    {
+      "id": "user2",
+      "username": "carlos.moda",
+      "name": "Carlos Rodríguez",
+      "avatar": "https://i.pravatar.cc/150?img=2",
+      "bio": "Amante de la moda urbana",
+      "style_preferences": ["streetwear", "urban", "sporty"],
+      "color_preferences": ["black", "white", "bold colors"],
+      "followers": ["user1"],
+      "following": ["user1", "user3"],
+      "verified": false
+    },
+    {
+      "id": "user3",
+      "username": "maria.style",
+      "name": "María López",
+      "avatar": "https://i.pravatar.cc/150?img=3",
+      "bio": "Fashionista | Sustainable Fashion",
+      "style_preferences": ["bohemian", "eco-friendly", "vintage"],
+      "color_preferences": ["earth tones", "natural", "muted"],
+      "followers": ["user1", "user2"],
+      "following": ["user1"],
+      "verified": true
+    },
+    {
+      "id": "user4",
+      "username": "sofia.chic",
+      "name": "Sofía Martínez",
+      "avatar": "https://i.pravatar.cc/150?img=4",
+      "bio": "Style blogger & content creator",
+      "style_preferences": ["glamorous", "party", "trendy"],
+      "color_preferences": ["bright", "jewel tones", "metallics"],
+      "followers": ["user1", "user3"],
+      "following": ["user2"],
+      "verified": true
+    },
+    {
+      "id": "user5",
+      "username": "diego.fashion",
+      "name": "Diego Fernández",
+      "avatar": "https://i.pravatar.cc/150?img=5",
+      "bio": "Menswear enthusiast | Classic style",
+      "style_preferences": ["classic", "formal", "timeless"],
+      "color_preferences": ["navy", "grey", "burgundy"],
+      "followers": ["user2"],
+      "following": ["user1", "user4"],
+      "verified": false
+    }
+  ]
+}

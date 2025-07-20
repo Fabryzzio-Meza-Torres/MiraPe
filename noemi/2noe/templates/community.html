@@ -1,0 +1,185 @@
+[7:53 p. m., 19/7/2025] Noemi Huarino ☀️: <!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comunidad - MiraPe</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Usar las mismas variables de color del tema principal */
+      :root {
+        --cream: #faf7f2;
+        --pastel-blue: #e6f3ff;
+        --light-blue: #b8e6ff;
+        --pale-gold: #e8d5b7;
+        --gold-accent: #d4af37;
+        --text-dark: #2c2c2c;
+        --text-medium: #5a5a5a;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --blue-accent: #7db8e8;
+      }
+
+      .feed-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .post-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .post-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 12px var(--shadow);
+        transition: transform 0.2s;
+      }
+
+      .post-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .post-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+      }
+
+      .post-content {
+        padding: 1rem;
+      }
+
+      .post-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .post-actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        border-top: 1px solid var(--cream);
+      }
+
+      .action-btn {
+        border: none;
+        background: none;
+        color: var(--text-medium);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .action-btn:hover {
+        color: var(--gold-accent);
+      }
+
+      .comments-section {
+        padding: 1rem;
+        background: var(--cream);
+        border-radius: 0 0 1rem 1rem;
+        display: none;
+      }
+
+      .comment {
+        background: white;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* Estilos para el formulario de publicación */
+      .input-field {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--pastel-blue);
+        border-radius: 0.5rem;
+      }
+
+      .submit-btn {
+        background: var(--blue-accent);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+
+      .submit-btn:hover {
+        background: var(--gold-accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="feed-container">
+      <!-- Formulario para crear nuevo post -->
+      <div class="post-form">
+        <h2>Crear nueva publicación</h2>
+        <form id="newPostForm">
+          <input
+            type="file"
+            id="postImage"
+            accept="image/*"
+            class="input-field"
+          />
+          <textarea
+            id="postDescription"
+            placeholder="Describe tu outfit..."
+            class="input-field"
+          ></textarea>
+          <button typ… [7:54 p. m., 19/7/2025] Noemi Huarino ☀️: { "users": [ {
+          "id": "user1", "username": "ana.garcia", "name": "Ana García",
+          "avatar": "https://i.pravatar.cc/150?img=1", "bio": "Fashion
+          enthusiast | Personal Stylist", "style_preferences": ["minimalist",
+          "business casual", "elegant"], "color_preferences": ["neutral",
+          "pastel", "earth tones"], "saved_outfits": [ { "id": "outfit1",
+          "image": "https://picsum.photos/400/500", "description": "Mi outfit
+          favorito para primavera", "tags": ["spring", "casual", "pastel"] } ],
+          "followers": ["user2", "user3"], "following": ["user2"], "matches": []
+          }, { "id": "user2", "username": "carlos.moda", "name": "Carlos
+          Rodríguez", "avatar": "https://i.pravatar.cc/150?img=2", "bio":
+          "Amante de la moda urbana", "style_preferences": ["streetwear",
+          "urban", "sporty"], "color_preferences": ["black", "white", "bold
+          colors"], "saved_outfits": [ { "id": "outfit2", "image":
+          "https://picsum.photos/400/501", "description": "Street style vibes",
+          "tags": ["street", "urban", "cool"] } ], "followers": ["user1"],
+          "following": ["user1"], "matches": [] }, { "id": "user3", "username":
+          "maria.style", "name": "María López", "avatar":
+          "https://i.pravatar.cc/150?img=3", "bio": "Fashionista | Sustainable
+          Fashion", "style_preferences": ["bohemian", "eco-friendly",
+          "vintage"], "color_preferences": ["earth tones", "natural", "muted"],
+          "saved_outfits": [ { "id": "outfit3", "image":
+          "https://picsum.photos/400/502", "description": "Outfit sostenible del
+          día", "tags": ["sustainable", "eco", "boho"] } ], "followers":
+          ["user1", "user2"], "following": ["user1"], "matches": [] } ] }
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
