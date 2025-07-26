@@ -906,6 +906,7 @@ def get_combinacion_detalle(combo_id):
 
 # ===================== RUTAS PARA COMUNIDAD =====================
 
+
 def load_community_data():
     """Cargar datos de la comunidad desde JSON"""
     try:
@@ -947,18 +948,21 @@ def get_community_posts():
     try:
         community_data = load_community_data()
         users_data = load_users_data()
-        
+
         # Enriquecer posts con información de usuarios
         for post in community_data.get("posts", []):
-            user = next((u for u in users_data.get("users", []) if u["id"] == post["user_id"]), None)
+            user = next(
+                (u for u in users_data.get("users", []) if u["id"] == post["user_id"]),
+                None,
+            )
             if user:
                 post["user"] = {
                     "name": user["name"],
                     "username": user["username"],
                     "avatar": user["avatar"],
-                    "verified": user.get("verified", False)
+                    "verified": user.get("verified", False),
                 }
-        
+
         return jsonify(community_data)
     except Exception as e:
         print(f"Error obteniendo posts: {e}")
@@ -973,32 +977,35 @@ def create_community_post():
         description = request.form.get("description")
         ocasion = request.form.get("ocasion", "")
         tags_json = request.form.get("tags", "[]")
-        
+
         # Parsear tags
         try:
             tags = json.loads(tags_json)
         except:
             tags = []
-        
+
         # Manejar imagen
         image_file = request.files.get("image")
         if not image_file:
             return jsonify({"error": "Imagen requerida"}), 400
-        
+
         # Guardar imagen
         timestamp = int(time.time())
         filename = secure_filename(f"{timestamp}_{image_file.filename}")
         image_path = os.path.join("upload_images", filename)
         image_file.save(image_path)
-        
+
         # Crear nuevo post
         community_data = load_community_data()
-        
+
         # Generar ID único para el post
-        existing_ids = [post.get("id", "").replace("post", "") for post in community_data.get("posts", [])]
+        existing_ids = [
+            post.get("id", "").replace("post", "")
+            for post in community_data.get("posts", [])
+        ]
         numeric_ids = [int(id_num) for id_num in existing_ids if id_num.isdigit()]
         new_id = max(numeric_ids, default=0) + 1
-        
+
         new_post = {
             "id": f"post{new_id}",
             "user_id": "user1",  # En una implementación real, esto vendría de la sesión
@@ -1010,20 +1017,20 @@ def create_community_post():
             "timestamp": f"{time.strftime('%Y-%m-%dT%H:%M:%S')}Z",
             "likes": 0,
             "comments": [],
-            "saved_by": []
+            "saved_by": [],
         }
-        
+
         # Agregar post al inicio de la lista
         if "posts" not in community_data:
             community_data["posts"] = []
         community_data["posts"].insert(0, new_post)
-        
+
         # Guardar datos actualizados
         if save_community_data(community_data):
             return jsonify({"success": True, "post": new_post})
         else:
             return jsonify({"error": "Error al guardar post"}), 500
-            
+
     except Exception as e:
         print(f"Error creando post: {e}")
         return jsonify({"error": "Error interno del servidor"}), 500
@@ -1042,21 +1049,23 @@ def toggle_post_like():
         data = request.get_json()
         post_id = data.get("postId")
         action = data.get("action")  # 'like' o 'unlike'
-        
+
         community_data = load_community_data()
-        post = next((p for p in community_data.get("posts", []) if p["id"] == post_id), None)
-        
+        post = next(
+            (p for p in community_data.get("posts", []) if p["id"] == post_id), None
+        )
+
         if not post:
             return jsonify({"error": "Post no encontrado"}), 404
-        
+
         if action == "like":
             post["likes"] = post.get("likes", 0) + 1
         elif action == "unlike":
             post["likes"] = max(0, post.get("likes", 0) - 1)
-        
+
         save_community_data(community_data)
         return jsonify({"success": True, "likes": post["likes"]})
-        
+
     except Exception as e:
         print(f"Error en toggle like: {e}")
         return jsonify({"error": "Error interno"}), 500
@@ -1069,27 +1078,31 @@ def toggle_post_save():
         data = request.get_json()
         post_id = data.get("postId")
         user_id = "user1"  # En implementación real vendría de la sesión
-        
+
         community_data = load_community_data()
-        post = next((p for p in community_data.get("posts", []) if p["id"] == post_id), None)
-        
+        post = next(
+            (p for p in community_data.get("posts", []) if p["id"] == post_id), None
+        )
+
         if not post:
             return jsonify({"error": "Post no encontrado"}), 404
-        
+
         saved_by = post.get("saved_by", [])
-        
+
         if user_id in saved_by:
             saved_by.remove(user_id)
             action = "unsaved"
         else:
             saved_by.append(user_id)
             action = "saved"
-        
+
         post["saved_by"] = saved_by
         save_community_data(community_data)
-        
-        return jsonify({"success": True, "action": action, "saved_count": len(saved_by)})
-        
+
+        return jsonify(
+            {"success": True, "action": action, "saved_count": len(saved_by)}
+        )
+
     except Exception as e:
         print(f"Error en toggle save: {e}")
         return jsonify({"error": "Error interno"}), 500
